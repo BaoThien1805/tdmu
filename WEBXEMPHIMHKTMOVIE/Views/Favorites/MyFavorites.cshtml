@@ -1,0 +1,42 @@
+﻿@model IEnumerable<MovieWebApp.Models.Movie>
+@{
+    ViewBag.Title = "Phim yêu thích";
+}
+
+<div class="container mt-4">
+    <h2 class="mb-4 fw-bold text-light">❤️ Phim yêu thích của tôi</h2>
+
+    <div class="row g-3">
+        @foreach (var movie in Model)
+        {
+            <div class="col-md-3 col-sm-6">
+                <div class="movie-card h-100 text-center">
+                    <!-- Poster -->
+                    <img src="@Url.Content(string.IsNullOrEmpty(movie.PosterPath) ? "~/Content/Images/no-poster.png" : movie.PosterPath)"
+                         class="movie-poster" alt="@movie.Title" />
+
+                    <!-- Nội dung card -->
+                    <div class="card-body d-flex flex-column">
+                        <h6 class="card-title fw-bold text-truncate flex-grow-1">@movie.Title</h6>
+
+                        <!-- Nút chức năng -->
+                        <div class="d-flex justify-content-center align-items-center gap-2 mt-auto">
+                            <a href="@Url.Action("Details", "Movies", new { id = movie.MovieId })"
+                               class="btn-xem">Xem chi tiết</a>
+
+                            <button class="btn btn-sm btn-outline-danger favorite-btn"
+                                    data-id="@movie.MovieId">
+                                💔
+                            </button>
+
+                            <div class="movie-views">
+                                <span class="icon">👁️</span>
+                                <span class="count">@movie.ViewCount</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

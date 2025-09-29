@@ -1,0 +1,24 @@
+﻿@model IEnumerable<MovieWebApp.Models.Movie>
+@{
+    ViewBag.Title = "Danh sách phim";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<div class="row">
+    @foreach (var movie in Model)
+    {
+        <div class="col-md-3 col-6 mb-4">
+            <div class="card h-100">
+                <img src="@Url.Content(movie.PosterPath)" class="card-img-top" style="height:200px; object-fit:cover;" />
+                <div class="card-body">
+                    <h6 class="card-title">@movie.Title</h6>
+                    <p class="text-muted">👁️ @movie.ViewCount lượt xem</p>
+                    <a href="@Url.Action("Details", "Movies", new { id = movie.MovieId })"
+                       class="btn btn-sm btn-outline-primary">Xem</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+

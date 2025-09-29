@@ -1,0 +1,15 @@
+﻿@model MovieWebApp.Models.User
+@{
+    ViewBag.Title = "Xóa người dùng";
+}
+<h2>Xóa người dùng</h2>
+<p>Bạn có chắc chắn muốn xóa tài khoản <strong>@Model.Username</strong> không?</p>
+
+@using (Html.BeginForm("Delete", "Users", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.UserId)
+    <button type="submit" class="btn btn-danger">Xóa</button>
+    @Html.ActionLink("Hủy", "Index", null, new { @class = "btn btn-secondary" })
+}
+

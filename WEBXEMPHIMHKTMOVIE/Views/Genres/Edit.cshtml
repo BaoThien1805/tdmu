@@ -1,0 +1,16 @@
+﻿@model MovieWebApp.Models.Genre
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    @Html.HiddenFor(model => model.GenreId) <!-- quan trọng -->
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.GenreName)
+        @Html.EditorFor(model => model.GenreName, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.GenreName, "", new { @class = "text-danger" })
+    </div>
+
+    <button type="submit" class="btn btn-primary">Lưu</button>
+}

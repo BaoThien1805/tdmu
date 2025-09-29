@@ -1,0 +1,107 @@
+﻿@model MovieWebApp.Models.Movie
+@{
+    ViewBag.Title = "Chi tiết phim";
+}
+
+<div class="container mt-5">
+    <div class="movie-detail-card p-4 rounded shadow-lg">
+        <div class="row">
+            <!-- Poster -->
+            <div class="col-md-4 text-center">
+                <img src="@Url.Content(string.IsNullOrEmpty(Model.PosterPath) ? "~/Content/Images/no-poster.png" : Model.PosterPath)"
+                     alt="@Model.Title" class="movie-detail-poster img-fluid rounded" />
+            </div>
+
+            <!-- Nội dung -->
+            <div class="col-md-8 text-light">
+                <h2 class="fw-bold">@Model.Title</h2>
+                <p><strong>🎬 Thể loại:</strong> @(Model.Genre != null ? Model.Genre.GenreName : "Không có")</p>
+                <p><strong>📅 Năm phát hành:</strong> @Model.ReleaseYear</p>
+                <p><strong>👁️ Lượt xem:</strong> @Model.ViewCount</p>
+                <p><strong>📝 Mô tả:</strong></p>
+                <p class="movie-desc">@Model.Description</p>
+
+                <!-- Nút hành động -->
+                <div class="movie-actions mt-3 d-flex gap-2">
+                    <a href="@Url.Action("Watch","Movies", new { id = Model.MovieId })"
+                       class="btn btn-primary">🎬 Xem phim</a>
+
+                    <!-- Nút yêu thích -->
+                    <button class="featured-fav-btn btn @(ViewBag.UserFavorites != null && ((List<int>)ViewBag.UserFavorites).Contains(Model.MovieId) ? "btn-danger" : "btn-outline-danger")"
+                            data-id="@Model.MovieId">
+                        @(ViewBag.UserFavorites != null && ((List<int>)ViewBag.UserFavorites).Contains(Model.MovieId) ? "💔 Bỏ yêu thích" : "❤️ Yêu thích")
+                    </button>
+
+
+                    <!-- Lượt xem -->
+                    <div class="featured-views align-self-center ms-2">
+                        👁️ @Model.ViewCount
+                    </div>
+                </div>
+
+
+
+            </div>
+        </div>
+    </div>
+
+    <!-- 🎬 Phim đề cử -->
+    @if (ViewBag.RelatedMovies != null && ((List<MovieWebApp.Models.Movie>)ViewBag.RelatedMovies).Any())
+    {
+        <div class="mt-5">
+            <h3 class="mb-3 fw-bold text-light">⭐ Phim đề cử</h3>
+            <div class="row g-3 featured-movies">
+                @foreach (var item in (List<MovieWebApp.Models.Movie>)ViewBag.RelatedMovies)
+                {
+                    <div class="col-md-3 col-sm-6">
+                        <div class="featured-card h-100 text-center">
+                            <img src="@Url.Content(string.IsNullOrEmpty(item.PosterPath) ? "~/Content/Images/no-poster.png" : item.PosterPath)"
+                                 class="featured-poster" alt="@item.Title" />
+                            <div class="featured-body d-flex flex-column">
+                                <h6 class="featured-title fw-bold flex-grow-1">@item.Title</h6>
+                                <div class="featured-actions mt-auto">
+                                    <a href="@Url.Action("Details", "Movies", new { id = item.MovieId })" class="featured-btn-xem">Xem chi tiết</a>
+                                    <button class="featured-fav-btn" data-id="@item.MovieId">❤</button>
+                                    <div class="featured-views">
+                                        <span class="icon">👁️</span>
+                                        <span class="count">@item.ViewCount</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+</div>
+@section scripts {
+    <script>
+        $(document).on("click", ".featured-fav-btn", function () {
+            var btn = $(this);
+            var movieId = btn.data("id");
+
+            $.post("@Url.Action("ToggleFavorite", "Favorites")", { movieId: movieId }, function (res) {
+                if (res.success) {
+                    if (res.isFavorite) {
+                        btn.removeClass("btn-outline-danger").addClass("btn-danger").text("💔");
+                        showMessage("✅ Đã thêm vào danh sách yêu thích!");
+                    } else {
+                        btn.removeClass("btn-danger").addClass("btn-outline-danger").text("❤️");
+                        showMessage("❌ Đã xoá khỏi danh sách yêu thích!");
+                    }
+                } else {
+                    alert(res.message || "Có lỗi xảy ra.");
+                }
+            });
+        });
+
+        function showMessage(msg) {
+            var alertBox = $('<div class="alert alert-success alert-dismissible fade show position-fixed top-0 end-0 m-3" role="alert" style="z-index: 2000;">'
+                + msg +
+                '<button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            $("body").append(alertBox);
+            setTimeout(function () { alertBox.alert('close'); }, 2500);
+        }
+    </script>
+}

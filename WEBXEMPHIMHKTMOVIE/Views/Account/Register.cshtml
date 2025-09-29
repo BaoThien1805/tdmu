@@ -1,0 +1,37 @@
+﻿@model MovieWebApp.Models.User
+@{
+    ViewBag.Title = "Đăng ký";
+}
+
+<div class="login-container">
+    <div class="login-box">
+        <!-- Bên trái: logo + background -->
+        <div class="login-left" style="background-image: url('@Url.Content("~/Content/Images/bg.jpg")');">
+            <div class="overlay"></div>
+            <div class="login-left-content text-center">
+                <img src="@Url.Content("~/Content/Images/logo.png")" alt="Logo" class="login-logo" />
+            </div>
+        </div>
+
+        <!-- Bên phải: Form đăng ký -->
+        <div class="login-right">
+            <h3 class="mb-3">Tạo tài khoản</h3>
+            <p>
+                Bạn đã có tài khoản?
+                @Html.ActionLink("đăng nhập ngay", "Login", "Account", null, new { @class = "link-register" })
+            </p>
+
+            @using (Html.BeginForm("Register", "Account", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+
+                <input type="text" name="FullName" class="login-input" placeholder="Họ tên" required />
+                <input type="email" name="Email" class="login-input" placeholder="Email" required />
+                <input type="text" name="Username" class="login-input" placeholder="Tên đăng nhập" required />
+                <input type="password" name="PasswordHash" class="login-input" placeholder="Mật khẩu" required />
+
+                <button type="submit" class="btn btn-login">Đăng ký</button>
+            }
+        </div>
+    </div>
+</div>

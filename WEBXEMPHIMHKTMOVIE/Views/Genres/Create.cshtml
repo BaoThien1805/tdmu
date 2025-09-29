@@ -1,0 +1,16 @@
+﻿@model MovieWebApp.Models.Genre
+@{
+    ViewBag.Title = "Thêm thể loại";
+}
+<h2>Thêm thể loại</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="form-group">
+        <label>Tên thể loại</label>
+        @Html.TextBoxFor(m => m.GenreName, new { @class = "form-control" })
+    </div>
+    <button type="submit" class="btn btn-success">Lưu</button>
+}
+

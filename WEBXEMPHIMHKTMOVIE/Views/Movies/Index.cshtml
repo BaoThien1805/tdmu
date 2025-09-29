@@ -1,0 +1,57 @@
+﻿@model IEnumerable<MovieWebApp.Models.Movie>
+
+@{
+    ViewBag.Title = "Danh sách phim";
+}
+
+<h2>Quản lý phim</h2>
+
+<p>
+    @* Link thêm phim (admin) *@
+    @Html.ActionLink("Thêm phim mới", "Create", null, new { @class = "btn btn-primary" })
+</p>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Poster</th>
+            <th>Tiêu đề</th>
+            <th>Thể loại</th>
+            <th>Phim bộ?</th>
+            <th>Ngày tạo</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                @* Hiển thị ảnh poster an toàn bằng Url.Content *@
+                <td>
+                    @if (!string.IsNullOrEmpty(item.PosterPath))
+                    {
+                        <img src="@Url.Content(item.PosterPath)" alt="@item.Title" width="60" />
+                    }
+                </td>
+
+                @* Hiển thị tiêu đề trực tiếp (tránh dùng DisplayFor với biến item) *@
+                <td>@item.Title</td>
+
+                @* Hiển thị tên thể loại: kiểm tra null để tránh lỗi nếu chưa gán Genre *@
+                <td>@(item.Genre != null ? item.Genre.GenreName : "Chưa có")</td>
+
+                @* Phân loại phim bộ / phim lẻ (cột IsSeries là bool) *@
+                <td>@(item.IsSeries ? "Bộ" : "Lẻ")</td>
+
+                @* Ngày tạo (format) *@
+                <td>@(item.CreatedAt.ToString("dd/MM/yyyy"))</td>
+
+                <td>
+                    @Html.ActionLink("Chi tiết", "Details", new { id = item.MovieId }) |
+                    @Html.ActionLink("Sửa", "Edit", new { id = item.MovieId }) |
+                    @Html.ActionLink("Xóa", "Delete", new { id = item.MovieId })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
