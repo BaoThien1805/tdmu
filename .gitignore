@@ -1,0 +1,9 @@
+*.mp4
+*.mkv
+*.avi
+
+WEBXEMPHIMHKTMOVIE/Content/Videos/
+bin/
+obj/
+.vs/
+node_modules/
