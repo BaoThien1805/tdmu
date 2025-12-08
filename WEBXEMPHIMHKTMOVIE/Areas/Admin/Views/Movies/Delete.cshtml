@@ -1,0 +1,58 @@
+﻿@model WEBXEMPHIMHKTMOVIE.Models.Movie
+
+@{
+    ViewBag.Title = "Xóa phim";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="container mt-5">
+    <div class="card shadow-lg border-0 rounded-4">
+        <!-- Header -->
+        <div class="card-header bg-danger text-white text-center rounded-top-4 py-3">
+            <h4 class="mb-0 fw-bold">
+                <i class="bi bi-trash3-fill me-2"></i> Xóa phim
+            </h4>
+        </div>
+
+        <!-- Body -->
+        <div class="card-body p-4 bg-light text-dark text-center">
+            <h5 class="fw-bold text-dark mb-3">
+                Bạn có chắc chắn muốn xóa phim này không?
+            </h5>
+
+            <div class="border rounded-4 p-4 bg-white shadow-sm mx-auto" style="max-width: 500px;">
+                @if (!string.IsNullOrEmpty(Model.PosterPath))
+                {
+                    <img src="@Url.Content(Model.PosterPath)" alt="@Model.Title"
+                         class="img-fluid rounded shadow mb-3"
+                         style="max-height: 250px;" />
+                }
+                else
+                {
+                    <div class="text-muted fst-italic mb-3">Chưa có poster</div>
+                }
+
+                <h4 class="fw-bold text-primary mb-2">@Model.Title</h4>
+                <p class="text-muted">@Model.Description</p>
+                <p><strong>Thể loại:</strong> @(Model.Genre != null ? Model.Genre.GenreName : "Không có")</p>
+                <p><strong>Phim bộ:</strong> @(Model.IsSeries ? "Có" : "Không")</p>
+                <p><strong>Ngày tạo:</strong> @Model.CreatedAt.ToString("dd/MM/yyyy")</p>
+            </div>
+
+            <div class="mt-4 d-flex justify-content-center">
+                @using (Html.BeginForm("Delete", "Movies", FormMethod.Post, new { area = "Admin" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(m => m.MovieId)
+
+                    <button type="submit" class="btn btn-danger px-4 me-2">
+                        <i class="bi bi-trash3"></i> Xóa
+                    </button>
+                }
+
+                @Html.ActionLink("Quay lại danh sách", "Index", null,
+                    new { @class = "btn btn-secondary px-4" })
+            </div>
+        </div>
+    </div>
+</div>

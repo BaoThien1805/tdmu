@@ -1,0 +1,56 @@
+﻿/* ===== FOOTER ===== */
+.site-footer {
+    background: #0e0e0e;
+    padding-top: 40px;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.footer-logo {
+    font-size: 1.6rem;
+    font-weight: bold;
+    color: #ffcc00;
+}
+
+.footer-title {
+    font-weight: bold;
+    margin-bottom: 12px;
+    color: #ffcc00;
+}
+
+/* Liên kết footer */
+.footer-links {
+    list-style: none;
+    padding: 0;
+}
+
+    .footer-links li {
+        margin-bottom: 8px;
+    }
+
+    .footer-links a {
+        color: #cccccc;
+        text-decoration: none;
+        transition: color 0.25s;
+    }
+
+        .footer-links a:hover {
+            color: #ffcc00;
+        }
+
+/* Icon mạng xã hội */
+.social-icons a {
+    display: inline-block;
+    margin-right: 12px;
+    font-size: 1.4rem;
+    color: #cccccc;
+    transition: color 0.25s, transform 0.25s;
+}
+
+    .social-icons a:hover {
+        color: #ffcc00;
+        transform: scale(1.2);
+    }
+
+.site-footer hr {
+    opacity: 0.15;
+}

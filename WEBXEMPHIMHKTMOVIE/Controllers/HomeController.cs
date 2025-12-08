@@ -1,9 +1,9 @@
-﻿using MovieWebApp.Models;
+﻿using WEBXEMPHIMHKTMOVIE.Models;
 using System;
 using System.Linq;
 using System.Web.Mvc;
 
-namespace MovieWebApp.Controllers
+namespace WEBXEMPHIMHKTMOVIE.Controllers
 {
     public class HomeController : Controller
     {
@@ -21,14 +21,14 @@ namespace MovieWebApp.Controllers
             // 📂 Lấy tất cả thể loại
             var genres = db.Genres.ToList();
 
-            // ⭐ Phim đề cử
+            // ⭐ Phim đề cử (lấy theo ViewCount)
             var featuredMovies = db.Movies
                 .Where(m => m.PosterPath != null && m.PosterPath != "")
                 .OrderByDescending(m => m.ViewCount)
                 .Take(4)
                 .ToList();
 
-            // 📺 Tất cả phim để phân trang
+            // 📺 Phim phân trang
             var movies = db.Movies
                 .Where(m => m.PosterPath != null && m.PosterPath != "")
                 .OrderByDescending(m => m.CreatedAt)
@@ -36,20 +36,21 @@ namespace MovieWebApp.Controllers
                 .Take(pageSize)
                 .ToList();
 
-            // 📄 Tính tổng số trang
+            // 📄 Tổng số trang
             int totalMovies = db.Movies.Count(m => m.PosterPath != null && m.PosterPath != "");
             ViewBag.TotalPages = (int)Math.Ceiling((double)totalMovies / pageSize);
             ViewBag.CurrentPage = page;
 
-            // 📝 Nhóm phim theo thể loại (để hiển thị từng khối trong view)
-            var allMovies = db.Movies
-                .Where(m => m.PosterPath != null && m.PosterPath != "")
-                .OrderByDescending(m => m.CreatedAt)
-                .ToList();
-
+            // 📝 Lấy phim theo từng thể loại (dựa vào bảng trung gian MovieGenres)
             var moviesByGenre = genres.ToDictionary(
-                g => g, // key: Genre
-                g => allMovies.Where(m => m.GenreId == g.GenreId).Take(8).ToList() // value: List<Movie>
+                g => g,
+                g => db.MovieGenres
+                        .Where(mg => mg.GenreId == g.GenreId)
+                        .Select(mg => mg.Movie)
+                        .Where(m => m.PosterPath != null && m.PosterPath != "")
+                        .OrderByDescending(m => m.CreatedAt)
+                        .Take(8)
+                        .ToList()
             );
 
             // Gửi dữ liệu sang View
@@ -57,10 +58,23 @@ namespace MovieWebApp.Controllers
             ViewBag.Genres = genres;
             ViewBag.FeaturedMovies = featuredMovies;
             ViewBag.MoviesByGenre = moviesByGenre;
+            // ----- Banner Ads -----
+            ViewBag.BannersTop = db.AdsBanners
+    .Where(b => b.Position == "HomeTop" && b.IsActive)
+    .ToList();
 
-            return View(movies); // Model chính vẫn có thể là danh sách chung
+            ViewBag.BannersMid = db.AdsBanners
+                .Where(b => b.Position == "HomeSide" && b.IsActive)
+                .ToList();
+
+            ViewBag.BannersBottom = db.AdsBanners
+                .Where(b => b.Position == "HomeBottom" && b.IsActive)
+                .ToList();
+            ViewBag.PopupBanner = db.AdsBanners
+    .Where(b => b.Position == "HomePopup" && b.IsActive)
+    .FirstOrDefault();
+
+            return View(movies);
         }
-
-
     }
 }

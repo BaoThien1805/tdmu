@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Linq;
 using System.Web.Mvc;
-using MovieWebApp.Models;
 using WEBXEMPHIMHKTMOVIE.Models;
 
-namespace MovieWebApp.Controllers
+namespace WEBXEMPHIMHKTMOVIE.Controllers
 {
     public class FavoritesController : Controller
     {

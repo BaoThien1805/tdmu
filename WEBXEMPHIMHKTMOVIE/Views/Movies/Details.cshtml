@@ -1,80 +1,121 @@
-﻿@model MovieWebApp.Models.Movie
+﻿@model WEBXEMPHIMHKTMOVIE.Models.Movie
 @{
     ViewBag.Title = "Chi tiết phim";
 }
+@section Styles {
+    <link rel="stylesheet" href="~/Content/css/movie-detail.css" />
+}
 
-<div class="container mt-5">
-    <div class="movie-detail-card p-4 rounded shadow-lg">
-        <div class="row">
-            <!-- Poster -->
-            <div class="col-md-4 text-center">
-                <img src="@Url.Content(string.IsNullOrEmpty(Model.PosterPath) ? "~/Content/Images/no-poster.png" : Model.PosterPath)"
-                     alt="@Model.Title" class="movie-detail-poster img-fluid rounded" />
-            </div>
+<div class="page-detail">
+    <div class="container mt-5">
 
-            <!-- Nội dung -->
-            <div class="col-md-8 text-light">
-                <h2 class="fw-bold">@Model.Title</h2>
-                <p><strong>🎬 Thể loại:</strong> @(Model.Genre != null ? Model.Genre.GenreName : "Không có")</p>
-                <p><strong>📅 Năm phát hành:</strong> @Model.ReleaseYear</p>
-                <p><strong>👁️ Lượt xem:</strong> @Model.ViewCount</p>
-                <p><strong>📝 Mô tả:</strong></p>
-                <p class="movie-desc">@Model.Description</p>
-
-                <!-- Nút hành động -->
-                <div class="movie-actions mt-3 d-flex gap-2">
-                    <a href="@Url.Action("Watch","Movies", new { id = Model.MovieId })"
-                       class="btn btn-primary">🎬 Xem phim</a>
-
-                    <!-- Nút yêu thích -->
-                    <button class="featured-fav-btn btn @(ViewBag.UserFavorites != null && ((List<int>)ViewBag.UserFavorites).Contains(Model.MovieId) ? "btn-danger" : "btn-outline-danger")"
-                            data-id="@Model.MovieId">
-                        @(ViewBag.UserFavorites != null && ((List<int>)ViewBag.UserFavorites).Contains(Model.MovieId) ? "💔 Bỏ yêu thích" : "❤️ Yêu thích")
-                    </button>
-
-
-                    <!-- Lượt xem -->
-                    <div class="featured-views align-self-center ms-2">
-                        👁️ @Model.ViewCount
-                    </div>
+        <!-- 🔹 PHẦN THÔNG TIN PHIM -->
+        <div class="movie-detail-card p-4 rounded shadow-lg">
+            <div class="row">
+                <!-- Poster -->
+                <div class="col-md-4 text-center">
+                    <img src="@Url.Content(string.IsNullOrEmpty(Model.PosterPath) ? "~/Content/Images/no-poster.png" : Model.PosterPath)"
+                         alt="@Model.Title" class="movie-detail-poster img-fluid rounded" />
                 </div>
 
+                <!-- Nội dung -->
+                <div class="col-md-8 text-light">
+                    <h2 class="fw-bold">@Model.Title</h2>
+                    <p>
+                        <strong>🎬 Thể loại:</strong>
+                        @(
+        Model.MovieGenres != null && Model.MovieGenres.Any()
+        ? string.Join(", ", Model.MovieGenres.Select(g => g.Genre.GenreName))
+        : "Không có"
+    )
+                    </p>
+                    <p><strong>📅 Năm phát hành:</strong> @Model.ReleaseYear</p>
+                    <p><strong>👁️ Lượt xem:</strong> @Model.ViewCount</p>
 
+                    <!-- Mô tả phim -->
+                    <p><strong>📝 Mô tả:</strong></p>
+                    <div class="movie-description-container">
+                        <p id="movie-description" class="movie-description">@Model.Description</p>
+                        <button id="toggle-description" class="btn-toggle-description">Xem thêm</button>
+                    </div>
 
+                    <!-- Nút hành động -->
+                    <div class="movie-actions mt-4 d-flex flex-wrap gap-2">
+                        <a href="@Url.Action("Watch","Movies", new { id = Model.MovieId })"
+                           class="btn btn-primary">🎬 Xem phim</a>
+
+                        <button class="featured-fav-btn btn @(ViewBag.UserFavorites != null && ((List<int>)ViewBag.UserFavorites).Contains(Model.MovieId) ? "btn-danger" : "btn-outline-danger")"
+                                data-id="@Model.MovieId">
+                            @(ViewBag.UserFavorites != null && ((List<int>)ViewBag.UserFavorites).Contains(Model.MovieId) ? "💔 Bỏ yêu thích" : "❤️ Yêu thích")
+                        </button>
+
+                        <div class="featured-views align-self-center ms-2">
+                            👁️ @Model.ViewCount
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
 
-    <!-- 🎬 Phim đề cử -->
-    @if (ViewBag.RelatedMovies != null && ((List<MovieWebApp.Models.Movie>)ViewBag.RelatedMovies).Any())
-    {
-        <div class="mt-5">
-            <h3 class="mb-3 fw-bold text-light">⭐ Phim đề cử</h3>
-            <div class="row g-3 featured-movies">
-                @foreach (var item in (List<MovieWebApp.Models.Movie>)ViewBag.RelatedMovies)
-                {
-                    <div class="col-md-3 col-sm-6">
-                        <div class="featured-card h-100 text-center">
-                            <img src="@Url.Content(string.IsNullOrEmpty(item.PosterPath) ? "~/Content/Images/no-poster.png" : item.PosterPath)"
-                                 class="featured-poster" alt="@item.Title" />
-                            <div class="featured-body d-flex flex-column">
-                                <h6 class="featured-title fw-bold flex-grow-1">@item.Title</h6>
-                                <div class="featured-actions mt-auto">
-                                    <a href="@Url.Action("Details", "Movies", new { id = item.MovieId })" class="featured-btn-xem">Xem chi tiết</a>
-                                    <button class="featured-fav-btn" data-id="@item.MovieId">❤</button>
-                                    <div class="featured-views">
-                                        <span class="icon">👁️</span>
-                                        <span class="count">@item.ViewCount</span>
+        <!-- 🔹 PHẦN ĐÁNH GIÁ & BÌNH LUẬN -->
+        <div class="movie-interact-section mt-5 p-4 rounded shadow-lg">
+            <div class="row">
+                <!-- Đánh giá -->
+                <div class="col-md-6 movie-rating text-center mb-5 mb-md-0">
+                    <h4 class="text-light mb-3">⭐ Đánh giá phim này</h4>
+                    <div id="rating-stars" class="d-inline-block"></div>
+                    <p class="mt-2" id="rating-value" style="font-size: 1.1rem;">Chưa có đánh giá</p>
+                    <button id="submit-rating" class="btn btn-warning mt-2">Gửi đánh giá</button>
+                </div>
+
+                <!-- Bình luận -->
+                <div class="col-md-6 movie-comments">
+                    <h4 class="fw-bold text-light mb-3">💬 Bình luận</h4>
+                    <div class="comment-box mb-3">
+                        <textarea id="comment-content" class="form-control bg-dark text-light border-secondary rounded-3"
+                                  rows="3" placeholder="Nhập bình luận của bạn..."></textarea>
+                        <button id="submit-comment" class="btn btn-success mt-2 px-4">Gửi bình luận</button>
+                    </div>
+                    <div id="comment-list" class="comment-list bg-dark p-3 rounded-3 shadow-sm">
+                        <p class="text-muted">Đang tải bình luận...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 🔹 PHIM ĐỀ CỬ -->
+        @if (ViewBag.RelatedMovies != null && ((List<WEBXEMPHIMHKTMOVIE.Models.Movie>)ViewBag.RelatedMovies).Any())
+        {
+            <div class="mt-5">
+                <h3 class="mb-3 fw-bold text-light">⭐ Phim đề cử</h3>
+                <div class="row g-3 featured-movies">
+                    @foreach (var item in (List<WEBXEMPHIMHKTMOVIE.Models.Movie>)ViewBag.RelatedMovies)
+                    {
+                        <div class="col-md-3 col-sm-6">
+                            <div class="featured-card h-100 text-center">
+                                <img src="@Url.Content(string.IsNullOrEmpty(item.PosterPath) ? "~/Content/Images/no-poster.png" : item.PosterPath)"
+                                     class="featured-poster" alt="@item.Title" />
+                                <div class="featured-body d-flex flex-column">
+                                    <h6 class="featured-title fw-bold flex-grow-1">@item.Title</h6>
+                                    <div class="featured-actions mt-auto">
+                                        <a href="@Url.Action("Details", "Movies", new { id = item.MovieId })" class="featured-btn-xem">Xem chi tiết</a>
+                                        <button class="featured-fav-btn" data-id="@item.MovieId">❤</button>
+                                        <div class="featured-views">
+                                            <span class="icon">👁️</span>
+                                            <span class="count">@item.ViewCount</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                }
+                    }
+                </div>
             </div>
-        </div>
-    }
+        }
+    </div>
 </div>
+
+
 @section scripts {
     <script>
         $(document).on("click", ".featured-fav-btn", function () {
@@ -103,5 +144,160 @@
             $("body").append(alertBox);
             setTimeout(function () { alertBox.alert('close'); }, 2500);
         }
+
+
+    </script>
+    <!-- ⭐ RATE -->
+    <script>
+    $(function () {
+        const movieId = @Model.MovieId;
+        let currentRating = @ViewBag.UserRating; // ⭐ lấy từ server (1–5)
+        const ratingContainer = $('#rating-stars');
+
+        // Tạo 5 sao (cho phép 0.5)
+        for (let i = 1; i <= 10; i++) {
+            const star = $('<span>')
+                .addClass('star')
+                .attr('data-value', (i / 2).toFixed(1))
+                .html('&#9733;')
+                .css({
+                    cursor: 'pointer',
+                    fontSize: '2rem',
+                    color: '#ccc',
+                    margin: '0 2px'
+                });
+            ratingContainer.append(star);
+        }
+
+        // 🔹 Hàm cập nhật màu sao
+        function updateStars(rating) {
+            $('.star').each(function () {
+                $(this).css('color', parseFloat($(this).data('value')) <= rating ? '#FFD700' : '#ccc');
+            });
+        }
+
+        // 🔹 Nếu user đã từng đánh giá → tô sẵn sao
+        if (currentRating > 0) {
+            updateStars(currentRating);
+            $('#rating-value').text(`Bạn đã đánh giá: ${currentRating} sao`);
+        }
+
+        // 🔹 Hover hiệu ứng
+        ratingContainer
+            .on('mouseenter', '.star', function () {
+                const val = parseFloat($(this).data('value'));
+                updateStars(val);
+            })
+            .on('mouseleave', function () {
+                updateStars(currentRating);
+            });
+
+        // 🔹 Click chọn sao
+        ratingContainer.on('click', '.star', function () {
+            currentRating = parseFloat($(this).data('value'));
+            $('#rating-value').text(`Bạn chọn: ${currentRating} sao`);
+            updateStars(currentRating);
+        });
+
+        // 🔹 Gửi đánh giá
+        $('#submit-rating').click(function () {
+            if (currentRating === 0) {
+                alert("Vui lòng chọn số sao để đánh giá!");
+                return;
+            }
+
+            $.post('@Url.Action("RateMovie", "Ratings")',
+                { movieId: movieId, score: currentRating },
+                function (res) {
+                    if (res.success) {
+                        showMessage("✅ Cảm ơn bạn đã đánh giá!");
+                        $('#rating-value').text(`Bạn đã đánh giá: ${currentRating} sao`);
+                        updateStars(currentRating);
+                    } else {
+                        alert(res.message || "Có lỗi xảy ra.");
+                    }
+                });
+        });
+
+        // 🔹 Hàm thông báo nhỏ gọn
+        function showMessage(msg) {
+            var alertBox = $('<div class="alert alert-success alert-dismissible fade show position-fixed top-0 end-0 m-3" role="alert" style="z-index: 2000;">'
+                + msg +
+                '<button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            $('body').append(alertBox);
+            setTimeout(function () { alertBox.alert('close'); }, 2500);
+        }
+    });
+    </script>
+    <!-- 💬 COMMENTS -->
+    <script>
+        $(document).ready(function () {
+            // ✅ Load danh sách bình luận khi vào trang
+            loadComments();
+
+            // ✅ Xử lý khi bấm nút "Gửi bình luận"
+            $("#submit-comment").click(function () {
+                var content = $("#comment-content").val().trim();
+                if (content === "") {
+                    alert("Vui lòng nhập nội dung bình luận!");
+                    return;
+                }
+
+                $.post("@Url.Action("AddComment", "Movies")", {
+                    movieId: @Model.MovieId,
+                    content: content
+                }, function (data) {
+                    if (data.success) {
+                        $("#comment-content").val(""); // Xoá nội dung ô nhập
+                        $("#comment-list").prepend(`
+                            <div class="comment-item mb-2 p-2 border-bottom">
+                                <strong class="text-warning">${data.userName}</strong>
+                                <p class="text-light mb-0">${data.content}</p>
+                                <small class="text-muted">Vừa xong</small>
+                            </div>
+                        `);
+                    } else {
+                        alert(data.message);
+                    }
+                });
+            });
+
+            // ✅ Hàm load bình luận
+            function loadComments() {
+                $.get("@Url.Action("GetComments", "Movies")", { movieId: @Model.MovieId }, function (data) {
+                    $("#comment-list").html("");
+                    if (data.length === 0) {
+                        $("#comment-list").html("<p class='text-muted'>Chưa có bình luận nào.</p>");
+                    } else {
+                        data.forEach(function (c) {
+                            $("#comment-list").append(`
+                                <div class="comment-item mb-2 p-2 border-bottom">
+                                    <strong class="text-warning">${c.userName}</strong>
+                                    <p class="text-light mb-0">${c.content}</p>
+                                    <small class="text-muted">${c.createdAt}</small>
+                                </div>
+                            `);
+                        });
+                    }
+                });
+            }
+        });
+    </script>
+   @*🔹 MỞ RỘNG / THU GỌN MÔ TẢ PHIM*@
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const desc = document.getElementById("movie-description");
+            const toggleBtn = document.getElementById("toggle-description");
+
+            // Nếu mô tả ngắn thì ẩn nút
+            if (desc.scrollHeight <= 120) {
+                toggleBtn.style.display = "none";
+            }
+
+            toggleBtn.addEventListener("click", function () {
+                desc.classList.toggle("expanded");
+                toggleBtn.textContent = desc.classList.contains("expanded") ? "Thu gọn" : "Xem thêm";
+            });
+        });
     </script>
 }

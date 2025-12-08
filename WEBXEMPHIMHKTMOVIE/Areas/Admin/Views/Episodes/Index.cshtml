@@ -1,0 +1,118 @@
+﻿@{
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+    var movie = ViewBag.Movie;
+    int seriesId = ViewBag.SeriesId;
+}
+
+<h2 class="mb-4">📺 Quản lý tập phim – @movie.Title</h2>
+
+<div class="alert alert-info">
+    <strong>Series:</strong> @movie.Title - Season 1
+    <br />
+    <strong>SeriesId:</strong> @seriesId
+</div>
+
+<hr />
+
+<!-- =============================== -->
+<!-- FORM THÊM TẬP PHIM (AJAX) -->
+<!-- =============================== -->
+<h4 class="mt-3">➕ Thêm tập mới</h4>
+
+<div class="row">
+    <div class="col-md-4">
+
+        <input type="hidden" id="seriesId" value="@seriesId" />
+
+        <div class="mb-2">
+            <label>Tiêu đề tập</label>
+            <input id="epTitle" class="form-control" placeholder="Tập 1, Tập đặc biệt..." />
+        </div>
+
+        <div class="mb-2">
+            <label>Video URL</label>
+            <input id="epVideoUrl" class="form-control" placeholder="https://..." />
+        </div>
+
+        <button onclick="createEpisode()" class="btn btn-success mt-2">
+            ➕ Thêm tập
+        </button>
+
+        <div id="msg" class="text-danger mt-2"></div>
+    </div>
+</div>
+
+<hr />
+
+<!-- =============================== -->
+<!-- DANH SÁCH TẬP PHIM -->
+<!-- =============================== -->
+<h4>📃 Danh sách tập</h4>
+
+<div id="episodeList">
+    <!-- AJAX sẽ load danh sách tập vào đây -->
+    <div class="text-center text-secondary">Đang tải danh sách tập...</div>
+</div>
+
+
+@section scripts {
+    <script>
+        // =====================
+        // LOAD DANH SÁCH TẬP
+        // =====================
+        function loadEpisodes() {
+            $.get('@Url.Action("GetEpisodes", "Episodes")', { seriesId: @seriesId }, function (html) {
+                $("#episodeList").html(html);
+            });
+        }
+
+        loadEpisodes(); // Tải lần đầu
+
+
+        // =====================
+        // TẠO TẬP MỚI (AJAX)
+        // =====================
+        function createEpisode() {
+            let title = $("#epTitle").val();
+            let videoUrl = $("#epVideoUrl").val();
+            let seriesId = $("#seriesId").val();
+
+            $.post('@Url.Action("CreateEpisodeAjax", "Episodes")',
+                {
+                    seriesId: seriesId,
+                    title: title,
+                    videoUrl: videoUrl
+                },
+                function (res) {
+                    if (res.success) {
+                        $("#msg").html("<span class='text-success'>" + res.message + "</span>");
+                        $("#epTitle").val("");
+                        $("#epVideoUrl").val("");
+                        loadEpisodes();
+                    } else {
+                        $("#msg").html("<span class='text-danger'>" + res.message + "</span>");
+                    }
+                }
+            );
+        }
+
+
+        // =====================
+        // XÓA TẬP (AJAX)
+        // =====================
+        function deleteEpisode(id) {
+            if (!confirm("Bạn có chắc muốn xóa tập này?")) return;
+
+            $.post('@Url.Action("DeleteEpisodeAjax", "Episodes")',
+                { id: id },
+                function (res) {
+                    if (res.success) {
+                        loadEpisodes();
+                    } else {
+                        alert(res.message);
+                    }
+                }
+            );
+        }
+    </script>
+}

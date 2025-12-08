@@ -46,6 +46,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BCrypt.Net-Next, Version=4.0.3.0, Culture=neutral, PublicKeyToken=1e11be04b6288443, processorArchitecture=MSIL">
+      <HintPath>..\packages\BCrypt.Net-Next.4.0.3\lib\net48\BCrypt.Net-Next.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.5.1\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -54,8 +57,21 @@
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
+    </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.4.5.4\lib\net461\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.3\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -127,21 +143,48 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\AdminLogsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\AdminRatingsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\AdsBannersController.cs" />
+    <Compile Include="Areas\Admin\Controllers\CommentsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\EpisodesController.cs" />
+    <Compile Include="Areas\Admin\Controllers\GenresController.cs" />
+    <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Admin\Controllers\MoviesController.cs" />
+    <Compile Include="Areas\Admin\Controllers\UserController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CommentsController.cs" />
     <Compile Include="Controllers\FavoritesController.cs" />
-    <Compile Include="Controllers\GenresController.cs" />
+    <Compile Include="Controllers\GenreController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MoviesController.cs" />
-    <Compile Include="Controllers\UsersController.cs" />
+    <Compile Include="Controllers\RatingsController.cs" />
+    <Compile Include="Controllers\VipController.cs" />
+    <Compile Include="Controllers\WatchHistoryController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\PayCompare.cs" />
+    <Compile Include="Helpers\PayLib.cs" />
+    <Compile Include="Helpers\Util.cs" />
+    <Compile Include="Models\AdminLog.cs" />
+    <Compile Include="Models\AdsBanners.cs" />
+    <Compile Include="Models\Comment.cs" />
+    <Compile Include="Models\Episode.cs" />
     <Compile Include="Models\Favorite.cs" />
     <Compile Include="Models\Genre.cs" />
     <Compile Include="Models\Movie.cs" />
+    <Compile Include="Models\MovieGenre.cs" />
+    <Compile Include="Models\MoviePerson.cs" />
     <Compile Include="Models\MovieWebDbContext.cs" />
+    <Compile Include="Models\Person.cs" />
+    <Compile Include="Models\Rating.cs" />
+    <Compile Include="Models\Series.cs" />
     <Compile Include="Models\User.cs" />
+    <Compile Include="Models\WatchHistory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\LogService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-grid.css" />
@@ -160,6 +203,23 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
+    <Content Include="Content\css\addbanner.css" />
+    <Content Include="Content\css\adminComments.css" />
+    <Content Include="Content\css\adminRating.css" />
+    <Content Include="Content\css\bygenre.css" />
+    <Content Include="Content\css\Footer.css" />
+    <Content Include="Content\css\genre-form.css" />
+    <Content Include="Content\css\home-index.css" />
+    <Content Include="Content\css\home_admin.css" />
+    <Content Include="Content\css\login.css" />
+    <Content Include="Content\css\movie-detail.css" />
+    <Content Include="Content\css\MyFavorite.css" />
+    <Content Include="Content\css\PhimBo.css" />
+    <Content Include="Content\css\PhimLe.css" />
+    <Content Include="Content\css\Search.css" />
+    <Content Include="Content\css\bannerpopup.css" />
+    <Content Include="Content\css\watch.css" />
+    <Content Include="Content\css\WatchHistory.css" />
     <Content Include="Content\Videos\vohanthanh.mp4" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
@@ -170,6 +230,33 @@
     <Content Include="Scripts\bootstrap.esm.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Areas\Admin\Views\web.config" />
+    <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Admin\Views\Home\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Users\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Users\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Users\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Users\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Users\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_LayoutAdmin.cshtml" />
+    <Content Include="Areas\Admin\Views\Movies\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Movies\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Movies\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Movies\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Movies\Search.cshtml" />
+    <Content Include="Areas\Admin\Views\Movies\Single.cshtml" />
+    <Content Include="Areas\Admin\Views\Genres\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Genres\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Genres\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Genres\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Genres\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Comments\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminRatings\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminLogs\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\AdsBanners\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Episodes\_EpisodeList.cshtml" />
+    <Content Include="Areas\Admin\Views\Episodes\Index.cshtml" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.0.js" />
     <Content Include="Scripts\jquery-3.7.0.min.js" />
@@ -195,38 +282,34 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Movies\Index.cshtml" />
-    <Content Include="Views\Movies\Details.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
-    <Content Include="Views\Movies\Create.cshtml" />
-    <Content Include="Views\Genres\Index.cshtml" />
-    <Content Include="Views\Genres\Create.cshtml" />
-    <Content Include="Views\Genres\Edit.cshtml" />
-    <Content Include="Views\Genres\Delete.cshtml" />
-    <Content Include="Views\Genres\Details.cshtml" />
-    <Content Include="Views\Users\Index.cshtml" />
-    <Content Include="Views\Users\Create.cshtml" />
-    <Content Include="Views\Users\Edit.cshtml" />
-    <Content Include="Views\Users\Delete.cshtml" />
-    <Content Include="Views\Users\Details.cshtml" />
     <Content Include="Views\Shared\_AdminMenu.cshtml" />
+    <Content Include="Views\Favorites\MyFavorites.cshtml" />
+    <Content Include="Views\Movies\ByGenre.cshtml" />
+    <Content Include="Views\Movies\Details.cshtml" />
+    <Content Include="Views\Movies\List.cshtml" />
+    <Content Include="Views\Movies\Search.cshtml" />
     <Content Include="Views\Movies\Series.cshtml" />
     <Content Include="Views\Movies\Single.cshtml" />
-    <Content Include="Views\Movies\IndexAdmin.cshtml" />
-    <Content Include="Views\Movies\Edit.cshtml" />
-    <Content Include="Views\Movies\Delete.cshtml" />
-    <Content Include="Views\Movies\ByGenre.cshtml" />
-    <Content Include="Views\Favorites\MyFavorites.cshtml" />
-    <None Include="Views\Movies\Search.cshtml" />
-    <Content Include="Views\Movies\List.cshtml" />
     <Content Include="Views\Movies\Watch.cshtml" />
+    <Content Include="Views\Comments\_CommentList.cshtml" />
+    <Content Include="Views\Shared\_GenreDropdown.cshtml" />
+    <Content Include="Views\Shared\Footer.cshtml" />
+    <Content Include="Views\WatchHistory\Index.cshtml" />
+    <Content Include="Views\Account\RegisterVip.cshtml" />
+    <Content Include="Views\Vip\Index.cshtml" />
+    <Content Include="Views\Vip\PaymentReturn.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\Admin\Data\" />
+    <Folder Include="Content\Ads\" />
     <Folder Include="Content\Images\" />
     <Folder Include="Content\Posters\" />
+    <Folder Include="Views\Genre\" />
     <Folder Include="Views\MyFavorites\" />
+    <Folder Include="Views\Ratings\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />

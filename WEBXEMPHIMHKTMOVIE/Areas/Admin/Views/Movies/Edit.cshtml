@@ -1,0 +1,132 @@
+﻿@model WEBXEMPHIMHKTMOVIE.Models.Movie
+
+@{
+    ViewBag.Title = "Chỉnh sửa phim";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="container mt-5">
+    <div class="card shadow-lg border-0 rounded-4">
+        <!-- Header -->
+        <div class="card-header bg-warning text-white text-center rounded-top-4 py-3">
+            <h4 class="mb-0 fw-bold">
+                <i class="bi bi-pencil-square me-2"></i> Chỉnh sửa phim
+            </h4>
+        </div>
+
+        <!-- Body -->
+        <div class="card-body p-4 bg-light text-dark">
+            @using (Html.BeginForm("Edit", "Movies", FormMethod.Post,new { enctype = "multipart/form-data", area = "Admin" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(m => m.MovieId)
+                @Html.HiddenFor(m => m.CreatedAt)
+
+                <div class="row">
+                    <!-- Cột trái -->
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            @Html.LabelFor(m => m.Title, "Tiêu đề", new { @class = "form-label fw-bold text-dark" })
+                            @Html.TextBoxFor(m => m.Title, new { @class = "form-control text-dark", placeholder = "Nhập tên phim..." })
+                            @Html.ValidationMessageFor(m => m.Title, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="mb-3">
+                            @Html.LabelFor(m => m.ReleaseYear, "Năm phát hành", new { @class = "form-label fw-bold text-dark" })
+                            @Html.TextBoxFor(m => m.ReleaseYear, new { @class = "form-control text-dark", type = "number", min = "1900", max = "2100" })
+                        </div>
+
+                        <!-- 🔹 Thể loại nhiều lựa chọn -->
+                        <div class="mb-3">
+                            <label class="form-label fw-bold text-dark">Thể loại</label>
+                            <div class="border rounded p-2 bg-white" style="max-height: 160px; overflow-y: auto;">
+                                @foreach (var genre in ViewBag.Genres as List<WEBXEMPHIMHKTMOVIE.Models.Genre>)
+                                {
+                                    bool isChecked = ((int[])ViewBag.SelectedGenres).Contains(genre.GenreId);
+                                    <div class="form-check">
+                                        <input class="form-check-input"
+                                               type="checkbox"
+                                               name="selectedGenres"
+                                               value="@genre.GenreId"
+                                               id="genre_@genre.GenreId"
+                                               @(isChecked ? "checked" : "") />
+                                        <label class="form-check-label" for="genre_@genre.GenreId">
+                                            @genre.GenreName
+                                        </label>
+                                    </div>
+                                }
+                            </div>
+                            <small class="text-muted">Chọn một hoặc nhiều thể loại phù hợp.</small>
+                        </div>
+
+
+
+                        <div class="form-check mb-3">
+                            @Html.CheckBoxFor(m => m.IsSeries, new { @class = "form-check-input" })
+                            @Html.LabelFor(m => m.IsSeries, "Phim bộ", new { @class = "form-check-label fw-bold text-dark" })
+                        </div>
+
+                        <div class="mb-3">
+                            @Html.LabelFor(m => m.Duration, "Thời lượng (phút)", new { @class = "form-label fw-bold text-dark" })
+                            @Html.TextBoxFor(m => m.Duration, new { @class = "form-control text-dark", placeholder = "Nhập thời lượng..." })
+                        </div>
+                    </div>
+
+                    <!-- Cột phải -->
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            @Html.LabelFor(m => m.Description, "Mô tả", new { @class = "form-label fw-bold text-dark" })
+                            @Html.TextAreaFor(m => m.Description, new { @class = "form-control text-dark", rows = 6, placeholder = "Nhập mô tả phim..." })
+                        </div>
+
+                        <div class="mb-3">
+                            @Html.Label("Ảnh poster", new { @class = "form-label fw-bold text-dark" })
+                            <input type="file" name="PosterFile" class="form-control text-dark" accept="image/*" onchange="previewPoster(event)" />
+                            <div class="mt-2">
+                                <img id="posterPreview"
+                                     src="@(string.IsNullOrEmpty(Model.PosterPath) ? Url.Content("~/Content/Images/no-image.png") : Url.Content(Model.PosterPath))"
+                                     alt="Poster Preview"
+                                     style="max-height:200px;"
+                                     class="rounded shadow border border-2 border-secondary" />
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            @Html.Label("Video (URL hoặc ~/Content/Videos/tenphim.mp4)", new { @class = "form-label fw-bold text-dark" })
+                            @Html.TextBoxFor(m => m.VideoPath, new { @class = "form-control text-dark", placeholder = "~/Content/Videos/tenphim.mp4" })
+                        </div>
+
+                        <div class="mb-3">
+                            @Html.LabelFor(m => m.ViewCount, "Lượt xem", new { @class = "form-label fw-bold text-dark" })
+                            @Html.TextBoxFor(m => m.ViewCount, new { @class = "form-control text-dark", type = "number", min = "0" })
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Buttons -->
+                <div class="d-flex justify-content-end mt-4">
+                    <button type="submit" class="btn btn-warning text-white px-4 me-2 fw-bold">
+                        <i class="bi bi-save me-1"></i> Cập nhật
+                    </button>
+                    <a href="@Url.Action("Index", "Movies", new { area = "Admin" })"
+                       class="btn btn-secondary px-4 fw-bold">
+                        <i class="bi bi-arrow-left-circle me-1"></i> Quay lại
+                    </a>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function previewPoster(event) {
+            const output = document.getElementById('posterPreview');
+            const file = event.target.files[0];
+            if (file) {
+                output.src = URL.createObjectURL(file);
+                output.style.display = 'block';
+            }
+        }
+    </script>
+}

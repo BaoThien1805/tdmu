@@ -1,0 +1,17 @@
+﻿@model IEnumerable<WEBXEMPHIMHKTMOVIE.Models.Comment>
+
+@if (Model != null && Model.Any())
+{
+    foreach (var c in Model)
+    {
+        <div class="border-bottom py-2">
+            <strong>@c.User.FullName</strong>
+            <span class="text-muted small">(@c.CreatedAt.ToString("dd/MM/yyyy HH:mm"))</span>
+            <div>@c.Content</div>
+        </div>
+    }
+}
+else
+{
+    <p class="text-muted fst-italic">Chưa có bình luận nào cho phim này.</p>
+}

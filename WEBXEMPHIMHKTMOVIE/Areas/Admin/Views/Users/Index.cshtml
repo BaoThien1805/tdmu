@@ -1,0 +1,71 @@
+﻿@model IEnumerable<WEBXEMPHIMHKTMOVIE.Models.User>
+
+@{
+    ViewBag.Title = "Quản lý người dùng";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="container py-4">
+    <div class="card shadow-lg border-0 rounded-4">
+        <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center rounded-top-4">
+            <div class="d-flex align-items-center gap-2">
+                <!-- 🔙 Nút quay lại -->
+                <a href="@Url.Action("Index", "Home", new { area = "Admin" })" class="btn btn-secondary btn-sm">
+                    ⬅️ Quay lại
+                </a>
+                <h4 class="mb-0">👥 Danh sách người dùng</h4>
+            </div>
+
+            <a href="@Url.Action("Create", "Users", new { area = "Admin" })" class="btn btn-success btn-sm">
+                ➕ Thêm người dùng
+            </a>
+        </div>
+
+        <div class="card-body table-responsive">
+            <table class="table table-hover align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th>#</th>
+                        <th>Họ tên</th>
+                        <th>Email</th>
+                        <th>Vai trò</th>
+                        <th>Ngày tạo</th>
+                        <th class="text-center" style="width:150px;">Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model == null || !Model.Any())
+                    {
+                        <tr>
+                            <td colspan="6" class="text-center text-muted">Không có người dùng nào.</td>
+                        </tr>
+                    }
+                    else
+                    {
+                        int i = 1;
+                        foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@i</td>
+                                <td>@item.FullName</td>
+                                <td>@item.Email</td>
+                                <td>
+                                    <span class="badge @(item.Role == "Admin" ? "bg-danger" : "bg-primary")">
+                                        @item.Role
+                                    </span>
+                                </td>
+                                <td>@item.CreatedAt.ToString("dd/MM/yyyy HH:mm")</td>
+                                <td class="text-center">
+                                    <a href="@Url.Action("Edit", "Users", new { area = "Admin", id = item.UserId })" class="btn btn-warning btn-sm">✏️</a>
+                                    <a href="@Url.Action("Details", "Users", new { area = "Admin", id = item.UserId })" class="btn btn-info btn-sm text-white">🔍</a>
+                                    <a href="@Url.Action("Delete", "Users", new { area = "Admin", id = item.UserId })" class="btn btn-danger btn-sm">🗑️</a>
+                                </td>
+                            </tr>
+                            i++;
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

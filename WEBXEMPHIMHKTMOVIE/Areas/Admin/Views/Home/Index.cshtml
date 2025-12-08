@@ -1,0 +1,73 @@
+﻿@{
+    ViewBag.Title = "Trang quản trị";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+<link rel="stylesheet" href="~/Content/css/home_admin.css" />
+<div class="admin-container">
+
+    <!-- Header -->
+    <div class="admin-header">
+        <h2 class="admin-title">👑 Khu vực quản trị</h2>
+        <p class="admin-subtitle">Xin chào, <strong>@ViewBag.FullName</strong> 👋</p>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-grid">
+
+        <div class="stat-item">
+            <div class="stat-label">🎬 Tổng số phim</div>
+            <div class="stat-value">@ViewBag.MovieCount</div>
+        </div>
+
+        <div class="stat-item">
+            <div class="stat-label">👤 Người dùng</div>
+            <div class="stat-value">@ViewBag.UserCount</div>
+        </div>
+
+        <div class="stat-item">
+            <div class="stat-label">🏷️ Thể loại</div>
+            <div class="stat-value">@ViewBag.GenreCount</div>
+        </div>
+
+    </div>
+
+    <!-- Management Menu -->
+    <div class="menu-grid">
+
+        <a class="menu-card" href="@Url.Action("Index", "Movies", new { area = "Admin" })">
+            <i class="bi bi-film"></i>
+            <span>Quản lý phim</span>
+        </a>
+
+        <a class="menu-card" href="@Url.Action("Index", "Users", new { area = "Admin" })">
+            <i class="bi bi-people-fill"></i>
+            <span>Quản lý người dùng</span>
+        </a>
+
+        <a class="menu-card" href="@Url.Action("Index", "Genres", new { area = "Admin" })">
+            <i class="bi bi-tags-fill"></i>
+            <span>Quản lý thể loại</span>
+        </a>
+
+        <a class="menu-card" href="@Url.Action("Index", "Comments", new { area = "Admin" })">
+            <i class="bi bi-chat-left-text-fill"></i>
+            <span>Quản lý bình luận</span>
+        </a>
+
+        <a class="menu-card" href="@Url.Action("Index", "AdminRatings", new { area = "Admin" })">
+            <i class="bi bi-star-fill"></i>
+            <span>Quản lý đánh giá</span>
+        </a>
+
+        <a class="menu-card" href="@Url.Action("Index", "AdsBanners", new { area = "Admin" })">
+            <i class="bi bi-clock-history"></i>
+            <span>Quản lý quảng cáo</span>
+        </a>
+
+        <a class="menu-card" href="@Url.Action("Index", "AdminLogs", new { area = "Admin" })">
+            <i class="bi bi-clock-history"></i>
+            <span>Nhật ký quản trị</span>
+        </a>
+    </div>
+
+</div>

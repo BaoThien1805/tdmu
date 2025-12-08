@@ -1,0 +1,434 @@
+﻿/* ===========================
+   🎬 HOME PAGE (INDEX)
+   Scoped by .page-index
+   (Giống hệt file gốc, chỉ thêm .page-index phía trước)
+=========================== */
+
+/* === BODY & FORM === */
+.page-index body {
+    background-color: #222222;
+    color: #fff;
+}
+
+.page-index .body-content {
+    margin-top: 15px;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.page-index .dl-horizontal dt {
+    white-space: normal;
+}
+
+.page-index input,
+.page-index select,
+.page-index textarea {
+    max-width: 280px;
+}
+
+/* === NAVBAR === */
+.page-index .navbar {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background-color: #333;
+    transition: 0.3s;
+}
+
+.page-index .navbar-brand {
+    font-weight: bold;
+    font-size: 20px;
+    color: #fff !important;
+}
+
+.page-index .navbar-nav .nav-link {
+    color: #ccc !important;
+    margin-left: 10px;
+    transition: 0.3s;
+}
+
+    .page-index .navbar-nav .nav-link:hover {
+        color: #fff !important;
+        background-color: #444;
+        border-radius: 5px;
+    }
+
+/* === SLIDER === */
+.page-index .carousel-caption h5 {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+/* === thịnh hành === */
+.page-index {
+    background-color: #1a1a1a;
+    color: #fff;
+    padding-bottom: 50px;
+}
+
+    /* === KHUNG CHUNG === */
+    .page-index .featured-movies-wrapper {
+        background-color: #1b1b1b;
+        padding: 35px 25px;
+        border-radius: 12px;
+        box-shadow: 0 0 25px rgba(0, 0, 0, 0.5);
+        margin-top: 40px;
+    }
+
+    /* === TIÊU ĐỀ TRUNG TÂM === */
+    .page-index .featured-section-title {
+        text-align: center;
+        color: #ffcc00;
+        font-size: 1.8rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 25px;
+        text-shadow: 0 0 10px rgba(255, 204, 0, 0.3);
+    }
+
+    /* === GRID PHIM === */
+    .page-index .featured-movies {
+        margin-top: 20px;
+    }
+
+    /* === CARD PHIM === */
+    .page-index .featured-card {
+        background-color: #181818;
+        border-radius: 10px;
+        overflow: hidden;
+        position: relative;
+        transition: transform 0.4s ease, box-shadow 0.4s ease;
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 100%;
+    }
+
+        .page-index .featured-card:hover {
+            transform: translateY(-8px) scale(1.03);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+        }
+
+    /* === POSTER === */
+    .page-index .featured-poster {
+        width: 100%;
+        height: 360px;
+        object-fit: cover;
+        transition: transform 0.4s ease;
+        border-radius: 10px 10px 0 0;
+    }
+
+    .page-index .featured-card:hover .featured-poster {
+        transform: scale(1.05);
+    }
+
+    /* === BODY === */
+    .page-index .featured-body {
+        background: linear-gradient(180deg, rgba(0,0,0,0.25) 0%, #111 100%);
+        padding: 15px 10px;
+        text-align: center;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    /* === TÊN PHIM === */
+    .page-index .featured-title {
+        font-weight: 600;
+        font-size: 1rem;
+        color: #fff;
+        margin-bottom: 12px;
+        line-height: 1.3em;
+        min-height: 2.6em;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: color 0.3s ease;
+    }
+
+    .page-index .featured-card:hover .featured-title {
+        color: #ffcc00;
+    }
+
+    /* === CỤM NÚT + VIEW === */
+    .page-index .featured-actions {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+    }
+
+    /* Nút Xem */
+    .page-index .featured-btn-xem {
+        background: linear-gradient(135deg, #007bff, #0056b3);
+        color: #fff !important;
+        border: none;
+        border-radius: 6px;
+        font-size: 0.85rem;
+        padding: 6px 12px;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 8px rgba(0, 123, 255, 0.3);
+        text-decoration: none;
+        display: inline-block;
+    }
+
+        .page-index .featured-btn-xem:hover {
+            background: linear-gradient(135deg, #339cff, #0066cc);
+            box-shadow: 0 4px 12px rgba(0, 123, 255, 0.5);
+            text-decoration: none; 
+        }
+
+    /* ❤️ Nút yêu thích */
+    .page-index .featured-fav-btn {
+        border: 2px solid #ff4b5c;
+        color: #ff4b5c;
+        background: transparent;
+        border-radius: 50%;
+        width: 38px;
+        height: 38px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.1rem;
+        transition: all 0.3s ease;
+    }
+
+        .page-index .featured-fav-btn:hover {
+            background: #ff4b5c;
+            color: #fff;
+            transform: scale(1.1);
+        }
+
+    /* 👁️ Lượt xem */
+    .page-index .featured-views {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        color: #bbb;
+        font-size: 0.8rem;
+        background-color: rgba(255,255,255,0.08);
+        padding: 4px 8px;
+        border-radius: 12px;
+        min-width: 50px;
+    }
+
+        .page-index .featured-views .icon {
+            margin-right: 4px;
+            font-size: 0.9rem;
+        }
+
+    /* Overlay hover */
+    .page-index .featured-card::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: rgba(0,0,0,0.3);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        pointer-events: none;
+    }
+
+    .page-index .featured-card:hover::after {
+        opacity: 1;
+    }
+
+/* Responsive */
+@media (max-width: 768px) {
+    .page-index .featured-poster {
+        height: 260px;
+    }
+
+    .page-index .featured-section-title {
+        font-size: 1.3rem;
+    }
+}
+
+
+    /* 🎞️ PHIM THEO THỂ LOẠI */
+    .page-index .movies-carousel {
+        background-color: #121212;
+        border-radius: 10px;
+        padding: 25px;
+        box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+        margin-top: 50px;
+    }
+
+        .page-index .movies-carousel h3 {
+            text-align: center;
+            font-weight: 700;
+            color: #ffcc00;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* --- Mỗi thể loại --- */
+        .page-index .movies-carousel .genre-section {
+            margin-bottom: 50px;
+        }
+
+            .page-index .movies-carousel .genre-section h4 {
+                color: #fff;
+                font-weight: 600;
+            }
+
+        .page-index .movies-carousel .xem-toan-bo {
+            color: #0d6efd;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+
+            .page-index .movies-carousel .xem-toan-bo:hover {
+                color: #66b2ff;
+                text-decoration: underline;
+            }
+
+        /* --- Hàng phim ngang --- */
+        .page-index .movies-carousel .movie-row {
+            display: flex;
+            flex-wrap: nowrap;
+            overflow-x: auto;
+            gap: 18px;
+            scroll-behavior: smooth;
+            padding-bottom: 10px;
+        }
+
+            .page-index .movies-carousel .movie-row::-webkit-scrollbar {
+                height: 6px;
+            }
+
+            .page-index .movies-carousel .movie-row::-webkit-scrollbar-thumb {
+                background: #555;
+                border-radius: 3px;
+            }
+
+                .page-index .movies-carousel .movie-row::-webkit-scrollbar-thumb:hover {
+                    background: #888;
+                }
+
+        /* --- CARD PHIM --- */
+        .page-index .movies-carousel .movie-card {
+            flex: 0 0 auto;
+            width: 180px;
+            background-color: #1b1b1b;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.35s ease, box-shadow 0.35s ease;
+            cursor: pointer;
+            position: relative;
+            text-align: center;
+            text-decoration: none;
+            color: inherit;
+        }
+
+            .page-index .movies-carousel .movie-card:hover {
+                transform: translateY(-8px) scale(1.03);
+                box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+            }
+
+            /* Poster */
+            .page-index .movies-carousel .movie-card .movie-poster {
+                width: 100%;
+                height: 250px;
+                object-fit: cover;
+                border-radius: 10px 10px 0 0;
+                transition: transform 0.4s ease;
+            }
+
+            .page-index .movies-carousel .movie-card:hover .movie-poster {
+                transform: scale(1.05);
+            }
+
+            /* Body */
+            .page-index .movies-carousel .movie-card .card-body {
+                padding: 12px 8px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                background: linear-gradient(180deg, rgba(0,0,0,0.15) 0%, #111 100%);
+                min-height: 90px;
+            }
+
+            /* Tiêu đề */
+            .page-index .movies-carousel .movie-card .card-title {
+                font-weight: 600;
+                font-size: 0.9rem;
+                color: #fff;
+                margin-bottom: 6px;
+                text-align: center;
+                line-height: 1.3em;
+                max-height: 2.6em;
+                overflow: hidden;
+            }
+
+            .page-index .movies-carousel .movie-card:hover .card-title {
+                color: #ffcc00;
+            }
+
+            /* Nút Xem giữa poster */
+            .page-index .movies-carousel .movie-card .btn-xem {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background: linear-gradient(135deg, #007bff, #0056b3);
+                color: #fff !important;
+                border-radius: 6px;
+                padding: 6px 14px;
+                font-size: 0.9rem;
+                text-decoration: none;
+                opacity: 0;
+                transition: all 0.3s ease;
+                z-index: 2;
+            }
+
+            .page-index .movies-carousel .movie-card:hover .btn-xem {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1.05);
+            }
+
+            .page-index .movies-carousel .movie-card .btn-xem:hover {
+                background: linear-gradient(135deg, #339cff, #0066cc);
+                box-shadow: 0 4px 10px rgba(0, 123, 255, 0.4);
+            }
+
+            /* Lượt xem */
+            .page-index .movies-carousel .movie-card .movie-views {
+                display: inline-flex;
+                align-items: center;
+                gap: 4px;
+                color: #bbb;
+                font-size: 0.8rem;
+                background-color: rgba(255,255,255,0.08);
+                padding: 2px 8px;
+                border-radius: 12px;
+                margin-top: 5px;
+            }
+
+            /* Overlay mờ khi hover */
+            .page-index .movies-carousel .movie-card::after {
+                content: "";
+                position: absolute;
+                inset: 0;
+                background: rgba(0,0,0,0.35);
+                opacity: 0;
+                transition: opacity 0.3s ease;
+            }
+
+            .page-index .movies-carousel .movie-card:hover::after {
+                opacity: 1;
+            }
+
+/* Responsive */
+@media (max-width: 768px) {
+    .page-index .movies-carousel .movie-card {
+        width: 140px;
+    }
+
+        .page-index .movies-carousel .movie-card .movie-poster {
+            height: 200px;
+        }
+}

@@ -1,0 +1,57 @@
+﻿/* === POPUP ADS FIXED === */
+#popup-overlay {
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0,0,0,0.65);
+    display: none; /* phải là none */
+    justify-content: center;
+    align-items: center;
+    z-index: 999999 !important;
+}
+
+
+/* Popup nhỏ gọn, nằm giữa màn hình */
+#popup-ads {
+    position: relative;
+    max-width: 380px;
+    width: 90%;
+    animation: popupZoom 0.25s ease-out;
+    z-index: 999999;
+    box-shadow: 0 0 25px rgba(0,0,0,0.6);
+}
+
+.popup-img {
+    width: 100%;
+    border-radius: 12px;
+}
+
+.popup-close {
+    position: absolute;
+    top: -15px;
+    right: -15px;
+    font-size: 24px;
+    color: #fff;
+    background: #ff3b3b;
+    width: 32px;
+    height: 32px;
+    line-height: 30px;
+    text-align: center;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 999999;
+}
+
+@keyframes popupZoom {
+    from {
+        transform: scale(0.7);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}

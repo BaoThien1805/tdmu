@@ -1,0 +1,42 @@
+﻿@model List<WEBXEMPHIMHKTMOVIE.Models.Episode>
+
+<table class="table table-bordered table-dark">
+    <thead>
+        <tr>
+            <th style="width: 60px">ID</th>
+            <th style="width: 80px">Tập</th>
+            <th>Tiêu đề</th>
+            <th>Video URL</th>
+            <th style="width: 100px">Hành động</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @if (Model.Count == 0)
+        {
+            <tr>
+                <td colspan="5" class="text-center text-warning">
+                    Chưa có tập nào.
+                </td>
+            </tr>
+        }
+        else
+        {
+            foreach (var ep in Model)
+            {
+                <tr>
+                    <td>@ep.EpisodeId</td>
+                    <td>@ep.EpisodeNumber</td>
+                    <td>@ep.Title</td>
+                    <td>@ep.VideoUrl</td>
+                    <td>
+                        <button class="btn btn-danger btn-sm"
+                                onclick="deleteEpisode(@ep.EpisodeId)">
+                            Xóa
+                        </button>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

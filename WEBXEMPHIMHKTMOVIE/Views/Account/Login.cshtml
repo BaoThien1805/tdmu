@@ -1,10 +1,10 @@
 ﻿@{
     ViewBag.Title = "Đăng nhập";
 }
-
+<link rel="stylesheet" href="~/Content/css/login.css" />
 <div class="login-container">
     <div class="login-box">
-        <!-- Bên trái: logo + background -->
+        <!-- ========== BÊN TRÁI: ẢNH NỀN + LOGO ========== -->
         <div class="login-left" style="background-image: url('@Url.Content("~/Content/Images/bg.jpg")');">
             <div class="overlay"></div>
             <div class="login-left-content text-center">
@@ -12,31 +12,29 @@
             </div>
         </div>
 
-        <!-- Bên phải: Form -->
+        <!-- ========== BÊN PHẢI: FORM ĐĂNG NHẬP ========== -->
         <div class="login-right">
-            <h3 class="mb-3">Đăng nhập</h3>
-            <p>
+            <h3 class="mb-3 fw-bold text-center">Đăng nhập</h3>
+            <p class="text-center text-muted">
                 Nếu bạn chưa có tài khoản,
-                @Html.ActionLink("đăng ký ngay", "Register", "Account", null, new { @class = "link-register" })
+                @Html.ActionLink("đăng ký ngay", "Register", "Account", null, new { @class = "link-register fw-semibold" })
             </p>
 
-            <!-- Thông báo lỗi -->
+            <!-- Hiển thị thông báo lỗi -->
             @if (ViewBag.Error != null)
             {
-                <div class="alert alert-danger">@ViewBag.Error</div>
+                <div class="alert alert-danger mt-3 text-center">@ViewBag.Error</div>
             }
 
             @using (Html.BeginForm("Login", "Account", FormMethod.Post))
             {
                 @Html.AntiForgeryToken()
-
                 <div class="mb-3">
-                    <input type="text" name="username" class="login-input" placeholder="Email" required />
+                    <input type="text" name="Username" class="login-input" placeholder="Email hoặc Tên đăng nhập" required />
                 </div>
                 <div class="mb-3">
-                    <input type="password" name="password" class="login-input" placeholder="Mật khẩu" required />
+                    <input type="password" name="Password" class="login-input" placeholder="Mật khẩu" required />
                 </div>
-
                 <button type="submit" class="btn btn-login w-100">Đăng nhập</button>
             }
 
@@ -50,6 +48,7 @@
                     Đăng nhập bằng Google
                 </button>
             </div>
+
         </div>
     </div>
 </div>

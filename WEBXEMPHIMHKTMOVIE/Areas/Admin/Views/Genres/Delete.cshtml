@@ -1,0 +1,25 @@
+﻿@model WEBXEMPHIMHKTMOVIE.Models.Genre
+@{
+    ViewBag.Title = "Xóa thể loại";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+
+}
+
+<h2>Bạn có chắc muốn xóa thể loại này?</h2>
+
+<div>
+    <h4>@Model.GenreName</h4>
+</div>
+
+@using (Html.BeginForm("Delete", "Genres", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    @Html.HiddenFor(model => model.GenreId)
+
+    <p>
+        <button type="submit" class="btn btn-danger">Xóa</button>
+        @Html.ActionLink("Quay lại", "Index", null, new { @class = "btn btn-secondary" })
+    </p>
+}
+

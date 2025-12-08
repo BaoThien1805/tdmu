@@ -1,0 +1,71 @@
+﻿@{
+    ViewBag.Title = "Kết quả thanh toán";
+}
+
+<div class="container mt-5" style="max-width:650px;">
+    <div class="card shadow border-0">
+        <div class="card-body">
+
+            <h2 class="text-center mb-4">💳 Kết quả thanh toán</h2>
+
+            @if (ViewBag.Message != null)
+            {
+                bool success = ViewBag.Message.ToString().Contains("thành công");
+
+                <div class="alert @(success ? "alert-success" : "alert-danger")">
+                    @ViewBag.Message
+                </div>
+
+                if (success)
+                {
+                    <hr />
+
+                    <h4 class="mb-3">📌 Thông tin giao dịch</h4>
+                    <table class="table table-bordered">
+                        <tr>
+                            <th style="width:35%;">Mã đơn hàng</th>
+                            <td>@ViewBag.OrderId</td>
+                        </tr>
+                        <tr>
+                            <th>Số tiền</th>
+                            <td>@((int.Parse(ViewBag.Amount) / 100).ToString("N0")) VND</td>
+                        </tr>
+                        <tr>
+                            <th>Ngân hàng</th>
+                            <td>@ViewBag.Bank</td>
+                        </tr>
+                        <tr>
+                            <th>Thời gian thanh toán</th>
+                            <td>
+                                @{
+                                    string t = ViewBag.Time;
+                                    if (!string.IsNullOrEmpty(t) && t.Length == 14)
+                                    {
+                                        DateTime payTime = DateTime.ParseExact(t, "yyyyMMddHHmmss", null);
+                                        @payTime.ToString("dd/MM/yyyy HH:mm:ss");
+                                    }
+                                }
+                            </td>
+                        </tr>
+                    </table>
+                }
+            }
+            else
+            {
+                <div class="alert alert-warning">
+                    ⚠ Không có thông tin giao dịch!
+                </div>
+            }
+
+            <div class="text-center mt-4">
+                <a href="@Url.Action("Index","Home")" class="btn btn-secondary">
+                    ⬅ Về trang chủ
+                </a>
+                <a href="@Url.Action("Index","Vip")" class="btn btn-warning">
+                    ⭐ Trang VIP
+                </a>
+            </div>
+
+        </div>
+    </div>
+</div>

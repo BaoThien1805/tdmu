@@ -7,24 +7,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - HKT Movie</title>
 
+    <!-- CSS chính -->
     <link href="~/Content/site.css" rel="stylesheet" />
 
+
     @Styles.Render("~/Content/css")
+    @RenderSection("Styles", required: false)
     @Scripts.Render("~/bundles/modernizr")
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/rateYo/3.3.4/jquery.rateyo.min.css" />
 </head>
+
+
 <body>
     @{
-        var username = (Session["Username"] ?? "").ToString();
-        var fullname = (Session["FullName"] ?? username).ToString();
+        bool isLoggedIn = Session["UserId"] != null;
+        bool isVip = Session["IsVip"] != null && (bool)Session["IsVip"];
+        string fullName = Session["FullName"]?.ToString();
+        DateTime? vipExpiredAt = Session["VipExpiredAt"] as DateTime?;
+    }
+
+    @{
+        var email = (Session["Email"] ?? "").ToString();
+        var fullname = (Session["FullName"] ?? "").ToString();
         var role = (Session["Role"] ?? "").ToString().ToLower();
-        var isLogged = !string.IsNullOrEmpty(username);
+        var isLogged = !string.IsNullOrEmpty(email);
         var isAdmin = (role == "admin");
     }
 
-    <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+    <!-- ======= NAVBAR ======= -->
+    <nav class="navbar navbar-expand-sm navbar-dark navbar-custom fixed-top">
         <div class="container">
-            <a class="navbar-brand" href="@Url.Action("Index", "Home")">
-                <img src="~/Content/Images/logo.png" alt="MyMovies" style="height:50px;" />
+            <a class="navbar-brand d-flex align-items-center" href="@Url.Action("Index", "Home")">
+                <img src="~/Content/Images/logo.png" alt="Logo" class="me-2" />
+
             </a>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -33,104 +50,123 @@
             </button>
 
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto">
+                <ul class="navbar-nav me-auto ms-3">
                     <li class="nav-item">@Html.ActionLink("Trang chủ", "Index", "Home", null, new { @class = "nav-link" })</li>
                     <li class="nav-item">@Html.ActionLink("Phim bộ", "Series", "Movies", null, new { @class = "nav-link" })</li>
                     <li class="nav-item">@Html.ActionLink("Phim lẻ", "Single", "Movies", null, new { @class = "nav-link" })</li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="@Url.Action("MyFavorites", "Favorites")">❤️ Phim yêu thích</a>
-                    </li>
+                    @Html.Action("GenreDropdown", "Genre", new { area = "" })
 
-                </ul>
 
-                @* Thanh tìm kiếm *@
-                @using (Html.BeginForm("Search", "Movies", FormMethod.Get, new { @class = "d-flex" }))
-                {
-                    <input type="text" name="query" class="form-control me-2" placeholder="Tìm phim..." />
-                    <button type="submit" class="btn btn-outline-light">Tìm</button>
-                }
-
-                <ul class="navbar-nav ms-3">
-                    @if (!isLogged)
+                    <li class="nav-item">@Html.ActionLink("Yêu thích ❤️", "MyFavorites", "Favorites", null, new { @class = "nav-link" })</li>
+                    @if (Session["UserId"] != null)
                     {
-                        <li class="nav-item">@Html.ActionLink("Đăng nhập", "Login", "Account", null, new { @class = "nav-link" })</li>
-                        <li class="nav-item">@Html.ActionLink("Đăng ký", "Register", "Account", null, new { @class = "nav-link" })</li>
-                    }
-                    else
-                    {
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-light" href="#" id="userMenu" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                👤 Xin chào, @fullname
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("Index","WatchHistory")">
+                                🕒 Lịch sử xem
                             </a>
-                            <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end" aria-labelledby="userMenu">
-                                <li>@Html.ActionLink("Đăng xuất", "Logout", "Account", null, new { @class = "dropdown-item" })</li>
-
-                                @if (isAdmin)
-                                {
-                                    <li><hr class="dropdown-divider" /></li>
-                                    <li>@Html.ActionLink("Quản lý Users", "Index", "Users", null, new { @class = "dropdown-item" })</li>
-                                    <li>@Html.ActionLink("Quản lý Phim", "Index", "Movies", null, new { @class = "dropdown-item" })</li>
-                                    <li>@Html.ActionLink("Quản lý Thể loại", "Index", "Genres", null, new { @class = "dropdown-item" })</li>
-                                }
-                            </ul>
                         </li>
                     }
+
                 </ul>
+
+                @using (Html.BeginForm("Search", "Movies", FormMethod.Get, new { @class = "d-flex align-items-center me-3" }))
+                {
+                    <input type="text" name="query" class="form-control me-2" placeholder="Tìm kiếm phim..." />
+                    <button type="submit" class="btn btn-search">🔍</button>
+                }
+
+            <ul class="navbar-nav">
+                @if (!isLogged)
+                {
+                    <li class="nav-item">
+                        @Html.ActionLink("Đăng nhập", "Login", "Account", null, new { @class = "nav-link user-btn" })
+                    </li>
+                    <li class="nav-item ms-2">
+                        @Html.ActionLink("Đăng ký", "Register", "Account", null, new { @class = "nav-link user-btn" })
+                    </li>
+                }
+                else
+                {
+                    if (isLoggedIn && (!isVip || (vipExpiredAt != null && vipExpiredAt <= DateTime.Now)))
+                    {
+                        <li class="nav-item ms-2">
+                            <a class="nav-link fw-bold text-warning vip-nav-btn"
+                               href="@Url.Action("Index", "Vip")">
+                                ⭐ Đăng ký VIP
+                            </a>
+                        </li>
+                    }
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-light user-btn"
+                           href="#"
+                           id="userMenu"
+                           role="button"
+                           data-bs-toggle="dropdown"
+                           aria-expanded="false">
+
+                            👤 @fullname
+
+                            @* ========== VIP BADGE ========== *@
+                            @if (isVip && (vipExpiredAt == null || vipExpiredAt > DateTime.Now))
+                            {
+                                <span class="badge bg-warning text-dark ms-1">VIP</span>
+                            }
+                        </a>
+
+                        <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end"
+                            aria-labelledby="userMenu">
+
+                            @* Thông tin VIP *@
+                            @if (isVip)
+                            {
+                                <li class="px-3 py-1 text-warning small">
+                                    ⭐ VIP @(vipExpiredAt == null
+                            ? "(Vĩnh viễn)"
+                            : $"đến {vipExpiredAt.Value:dd/MM/yyyy}")
+                                </li>
+                                <li><hr class="dropdown-divider" /></li>
+                            }
+
+                            <li>
+                                @Html.ActionLink("Đăng xuất", "Logout", "Account", null,
+                                    new { @class = "dropdown-item" })
+                            </li>
+                            <li>@Html.ActionLink("🎖️ Nâng cấp VIP", "Index", "Vip", null, new { @class = "dropdown-item text-warning fw-bold" })</li>
+
+                            @if (isAdmin)
+                            {
+                                <li><hr class="dropdown-divider" /></li>
+                                <li>@Html.ActionLink("Quản lý Users", "Index", "Users", new { area = "Admin" }, new { @class = "dropdown-item" })</li>
+                                <li>@Html.ActionLink("Quản lý Phim", "Index", "Movies", new { area = "Admin" }, new { @class = "dropdown-item" })</li>
+                                <li>@Html.ActionLink("Quản lý Thể loại", "Index", "Genres", new { area = "Admin" }, new { @class = "dropdown-item" })</li>
+                                <li>@Html.ActionLink("Quản lý Bình luận", "Index", "Comments", new { area = "Admin" }, new { @class = "dropdown-item" })</li>
+                                <li>@Html.ActionLink("Quản lý Đánh giá", "Index", "AdminRatings", new { area = "Admin" }, new { @class = "dropdown-item" })</li>
+                                <li>@Html.ActionLink("Nhật ký quản trị", "Index", "AdminLogs", new { area = "Admin" }, new { @class = "dropdown-item" })</li>
+                            }
+                        </ul>
+                    </li>
+                }
+            </ul>
 
             </div>
         </div>
     </nav>
 
-    <div class="container body-content mt-4">
+    <!-- ======= NỘI DUNG ======= -->
+    <div class="container body-content" style="margin-top: 90px;">
         @RenderBody()
         <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - MovieWebApp</p>
-        </footer>
+        @*<footer>
+                <p>&copy; @DateTime.Now.Year - HKT Movie</p>
+            </footer>*@
     </div>
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
-    <script src="~/Scripts/jquery-3.6.0.min.js"></script>
+    <!-- ======= SCRIPT ======= -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="~/Scripts/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/rateYo/3.3.4/jquery.rateyo.min.js"></script>
+    @RenderSection("scripts", required: false)
 </body>
+@Html.Partial("Footer")
 </html>
-<!-- ========== Nút thêm yêu thích ========== -->
-@section scripts {
-    <script>
-        $(document).on("click", ".featured-fav-btn", function () {
-        var btn = $(this);
-        var movieId = btn.data("id");
-
-        $.post("@Url.Action("ToggleFavorite", "Favorites")", { movieId: movieId }, function (res) {
-            if (res.success) {
-                if (res.isFavorite) {
-                    // Đổi nút thành màu đỏ, text 💔
-                    btn.removeClass("btn-outline-danger").addClass("btn-danger").text("💔");
-                    showMessage("✅ Đã thêm vào danh sách yêu thích!");
-                } else {
-                    // Đổi nút về mặc định, text ❤️
-                    btn.removeClass("btn-danger").addClass("btn-outline-danger").text("❤️");
-                    showMessage("❌ Đã xoá khỏi danh sách yêu thích!");
-                }
-            } else {
-                alert(res.message || "Có lỗi xảy ra.");
-            }
-        });
-    });
-
-    // Hiển thị thông báo (toast đơn giản)
-    function showMessage(msg) {
-        var alertBox = $('<div class="alert alert-success alert-dismissible fade show position-fixed top-0 end-0 m-3" role="alert" style="z-index: 2000;">'
-            + msg +
-            '<button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-        $("body").append(alertBox);
-
-        setTimeout(function () {
-            alertBox.alert('close');
-        }, 2500); // Tự ẩn sau 2.5s
-    }
-    </script>
-}
-

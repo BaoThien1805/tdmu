@@ -1,18 +1,57 @@
-﻿@model MovieWebApp.Models.Movie
+﻿@model WEBXEMPHIMHKTMOVIE.Models.Movie
 @{
     ViewBag.Title = "Xem phim " + Model.Title;
+    var episodes = ViewBag.Episodes as List<WEBXEMPHIMHKTMOVIE.Models.Episode>;
 }
 
-<div class="container mt-4">
-    <h2>@Model.Title</h2>
+<div class="page-watch container mt-5">
+    <div class="watch-card shadow-lg p-4 rounded">
+        <h2 class="movie-title mb-4 text-center fw-bold">@Model.Title</h2>
 
-    <!-- Video Player -->
-    <video width="100%" height="500" controls>
-        <source src="@Url.Content(Model.VideoPath)" type="video/mp4" />
-        Trình duyệt của bạn không hỗ trợ phát video.
-    </video>
+        <!-- 🎬 Video Player -->
+        <div class="video-container mb-4">
+            <video class="movie-video" controls poster="@Url.Content(Model.PosterPath)">
+                <source src="@Url.Content(Model.VideoPath)" type="video/mp4" />
+                Trình duyệt của bạn không hỗ trợ phát video.
+            </video>
+        </div>
 
-    <!-- Quay lại Trang chủ -->
-    <a href="@Url.Action("Index", "Home")"
-       class="btn btn-primary mt-3">Về trang chủ</a>
+        <!-- 🔁 Nếu là phim bộ -->
+        @if (Model.IsSeries && episodes != null && episodes.Any())
+        {
+            <div class="episode-section mt-4">
+                <div class="d-flex align-items-center mb-2">
+                    <i class="bi bi-tv text-light me-2"></i>
+                    <span class="fw-bold text-uppercase text-secondary">Danh sách tập</span>
+                </div>
+
+                <div class="episode-grid">
+                    @foreach (var ep in episodes)
+                    {
+                        <a href="@Url.Action("Watch", "Movies", new { id = Model.MovieId, episodeId = ep.EpisodeId })"
+                           class="episode-box @(ViewBag.CurrentEpisodeId == ep.EpisodeId ? "active" : "")">
+                            @ep.EpisodeNumber.ToString("D2")
+                        </a>
+                    }
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="episode-section mt-4">
+                <div class="d-flex align-items-center mb-2">
+                    <i class="bi bi-tv text-light me-2"></i>
+                    <span class="fw-bold text-uppercase text-secondary">Tập Phim</span>
+                </div>
+                <div class="episode-grid">
+                    <a class="episode-box active">01</a>
+                </div>
+            </div>
+        }
+
+    </div>
 </div>
+
+@section Styles {
+    <link href="~/Content/css/watch.css?v=@DateTime.Now.Ticks" rel="stylesheet" />
+}

@@ -1,0 +1,42 @@
+﻿@model WEBXEMPHIMHKTMOVIE.Models.User
+@{
+    ViewBag.Title = "Chi tiết người dùng";
+}
+
+<div class="d-flex justify-content-center align-items-center" style="min-height: 100vh; background: #f5f6fa;">
+    <div class="card shadow-lg border-0 rounded-4" style="width: 500px;">
+        <div class="card-header bg-dark text-white text-center rounded-top-4">
+            <h4 class="mb-0">👤 Chi tiết người dùng</h4>
+        </div>
+
+        <div class="card-body p-4">
+            <ul class="list-group list-group-flush mb-4">
+                <li class="list-group-item">
+                    <strong>ID:</strong> @Model.UserId
+                </li>
+                <li class="list-group-item">
+                    <strong>Họ tên:</strong> @Model.FullName
+                </li>
+                <li class="list-group-item">
+                    <strong>Email:</strong> @Model.Email
+                </li>
+                <li class="list-group-item">
+                    <strong>Mật khẩu (mã hóa):</strong>
+                    <code>@Model.PasswordHash</code>
+                </li>
+                <li class="list-group-item">
+                    <strong>Quyền:</strong>
+                    <span class="badge @(Model.Role == "Admin" ? "bg-danger" : "bg-primary")">@Model.Role</span>
+                </li>
+                <li class="list-group-item">
+                    <strong>Ngày tạo:</strong> @Model.CreatedAt.ToString("dd/MM/yyyy HH:mm")
+                </li>
+            </ul>
+
+            <div class="d-flex justify-content-between">
+                <a href="@Url.Action("Index")" class="btn btn-secondary px-4">⬅️ Quay lại</a>
+                <a href="@Url.Action("Edit", new { id = Model.UserId })" class="btn btn-warning px-4">✏️ Sửa</a>
+            </div>
+        </div>
+    </div>
+</div>

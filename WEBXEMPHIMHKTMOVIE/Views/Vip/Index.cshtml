@@ -1,0 +1,84 @@
+﻿@{
+    ViewBag.Title = "Đăng ký VIP";
+    bool isVip = ViewBag.IsVip != null && (bool)ViewBag.IsVip;
+    DateTime? expired = ViewBag.VipExpiredAt as DateTime?;
+}
+
+<div class="container" style="max-width:750px">
+
+    <h2 class="text-warning mb-4 fw-bold">
+        🌟 GÓI THÀNH VIÊN VIP
+    </h2>
+
+    <!-- ===== TRẠNG THÁI VIP ===== -->
+    @if (isVip && expired != null && expired > DateTime.Now)
+    {
+        <div class="alert alert-success shadow-sm">
+            <h5 class="mb-1">✨ Bạn đang là <strong class="text-primary">VIP</strong></h5>
+            <p class="mb-0">
+                ⏰ Hạn dùng đến:
+                <b class="text-dark">@expired.Value.ToString("dd/MM/yyyy")</b>
+            </p>
+        </div>
+    }
+    else if (isVip && expired == null)
+    {
+        <div class="alert alert-success shadow-sm">
+            <h5 class="mb-0">✨ Bạn đang là <strong class="text-primary">VIP VĨNH VIỄN</strong></h5>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-warning shadow-sm">
+            <h5 class="fw-bold text-danger">⚠ Bạn chưa là VIP</h5>
+            <p class="mb-0">Nâng cấp để mở khóa <b>phim độc quyền</b> & xem <b>không quảng cáo</b>.</p>
+        </div>
+    }
+
+    <hr />
+
+    <!-- ===== GÓI VIP ===== -->
+    <div class="card shadow border-0 rounded-4">
+        <div class="card-body text-center py-4">
+
+            <h4 class="card-title text-warning fw-bold mb-3">⭐ VIP 1 Tháng</h4>
+
+            <p class="card-text" style="color:#444; font-size:17px; line-height:1.7;">
+                <span style="color:#28a745; font-weight:bold;">✔</span>
+                <span class="text-dark">Xem tất cả phim VIP</span><br />
+
+                <span style="color:#28a745; font-weight:bold;">✔</span>
+                <span class="text-dark">Không quảng cáo</span><br />
+
+                <span style="color:#28a745; font-weight:bold;">✔</span>
+                <span class="text-dark">Chất lượng Full HD / 4K</span>
+            </p>
+
+            <h3 class="text-danger fw-bold mb-4">50.000 VNĐ</h3>
+
+            @* ẨN NÚT THANH TOÁN NẾU ĐÃ LÀ VIP *@
+            @if (!isVip || (expired != null && expired <= DateTime.Now))
+            {
+                <a href="@Url.Action("CreatePayment", "Vip", new { months = 1 })"
+                   class="btn btn-warning btn-lg px-5 fw-bold shadow-sm"
+                   style="font-size:20px;">
+                    🔥 Thanh toán qua VNPAY
+                </a>
+            }
+            else
+            {
+                <div class="alert alert-info mt-3 fw-bold">
+                    Bạn đã là VIP — không cần thanh toán nữa 🎉
+                </div>
+            }
+        </div>
+    </div>
+
+    <!-- ===== THÔNG BÁO ===== -->
+    @if (TempData["Message"] != null)
+    {
+        <div class="alert alert-info text-center mt-3 shadow-sm">
+            @TempData["Message"]
+        </div>
+    }
+</div>

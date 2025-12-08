@@ -1,0 +1,29 @@
+﻿@model WEBXEMPHIMHKTMOVIE.Models.Genre
+@{
+    ViewBag.Title = "Thêm thể loại";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/Content/css/genre-form.css" />
+}
+
+<div class="genre-create-container">
+    <div class="genre-card shadow-lg p-4">
+        <h2 class="genre-title text-center mb-4">🎬 Thêm thể loại mới</h2>
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            <div class="form-group mb-3">
+                <label for="GenreName" class="form-label fw-bold">Tên thể loại</label>
+                @Html.TextBoxFor(m => m.GenreName, new { @class = "form-control genre-input", placeholder = "Nhập tên thể loại..." })
+            </div>
+
+            <div class="text-center">
+                <button type="submit" class="btn btn-success genre-btn">💾 Lưu thể loại</button>
+                <a href="@Url.Action("Index", "Genres", new { area = "Admin" })" class="btn btn-secondary ms-2">↩ Quay lại</a>
+            </div>
+        }
+    </div>
+</div>

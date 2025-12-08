@@ -1,0 +1,38 @@
+﻿@model IEnumerable<WEBXEMPHIMHKTMOVIE.Models.Genre>
+
+<li class="nav-item dropdown position-static">
+    <a class="nav-link dropdown-toggle fw-bold text-light" href="#" id="genreDropdown" role="button"
+       data-bs-toggle="dropdown" aria-expanded="false">
+        Thể loại
+    </a>
+    <div class="dropdown-menu w-100 mt-0 shadow-lg p-3" aria-labelledby="genreDropdown" style="background-color: #0b0b0b;">
+        <div class="container">
+            <div class="row row-cols-2 row-cols-md-3 row-cols-lg-5 g-2">
+                @foreach (var genre in Model)
+                {
+                    <div class="col">
+                        <a href="@Url.Action("ByGenre", "Movies", new { id = genre.GenreId })"
+                           class="dropdown-item text-light"
+                           style="white-space: normal;">
+                            @genre.GenreName
+                        </a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</li>
+
+<style>
+    /* Giúp menu trải rộng và đẹp hơn */
+    .dropdown-menu {
+        max-height: 400px;
+        overflow-y: auto;
+        border-radius: 10px;
+    }
+
+    .dropdown-item:hover {
+        background-color: #222;
+        color: #ffd700 !important;
+    }
+</style>

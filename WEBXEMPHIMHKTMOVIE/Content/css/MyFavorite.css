@@ -1,0 +1,159 @@
+﻿/* ===== 🎬 TRANG PHIM YÊU THÍCH ===== */
+body {
+    background-color: #121212;
+    color: #fff;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.container h2 {
+    color: #ff4d6d;
+    text-shadow: 0 0 10px rgba(255, 77, 109, 0.4);
+    letter-spacing: 0.5px;
+}
+
+/* ===== CARD PHIM ===== */
+.movie-card {
+    background-color: #1c1c1c;
+    border: none;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.35s ease;
+    cursor: pointer;
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.4);
+    height: 420px; /* 🔥 tăng chiều cao thẻ phim */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+    .movie-card:hover {
+        transform: translateY(-8px) scale(1.03);
+        box-shadow: 0 8px 25px rgba(255, 77, 109, 0.5);
+    }
+
+/* Poster phim */
+.movie-poster {
+    height: 330px; /* 🔥 tăng chiều cao ảnh */
+    width: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease, opacity 0.4s ease;
+}
+
+.movie-card:hover .movie-poster {
+    transform: scale(1.08);
+    opacity: 0.9;
+}
+
+/* Thông tin phim */
+.movie-card .card-body {
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.1) 0%, #111 100%);
+    padding: 12px 10px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.movie-card .card-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 4px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    transition: color 0.3s ease;
+}
+
+.movie-card:hover .card-title {
+    color: #ff4d6d;
+}
+
+/* Lượt xem */
+.movie-views {
+    background-color: rgba(255, 255, 255, 0.08);
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-size: 0.85rem;
+    color: #bbb;
+}
+
+/* ===== NÚT XEM ===== */
+.btn-xem {
+    border: 1px solid #ff4d6d;
+    color: #ff4d6d;
+    padding: 6px 10px;
+    border-radius: 5px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    text-decoration: none;
+    display: inline-block;
+}
+
+    .btn-xem:hover {
+        background: linear-gradient(135deg, #ff4d6d, #ff1e56);
+        color: #fff;
+        box-shadow: 0 0 12px rgba(255, 77, 109, 0.6);
+        text-decoration: none; 
+    }
+
+
+/* ===== NÚT TRÁI TIM ===== */
+.favorite-btn {
+    border: 1px solid #ff4d6d;
+    background-color: transparent;
+    color: #ff4d6d;
+    padding: 6px 10px;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    font-size: 1.1rem;
+}
+
+    .favorite-btn:hover {
+        background-color: #ff4d6d;
+        color: #fff;
+        box-shadow: 0 0 10px rgba(255, 77, 109, 0.7);
+    }
+
+    /* Khi đã yêu thích */
+    .favorite-btn.active {
+        background-color: #ff4d6d;
+        color: white;
+        box-shadow: 0 0 12px rgba(255, 77, 109, 0.8);
+    }
+
+/* Hiệu ứng nảy tim khi bấm */
+@keyframes pulseAnim {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.4);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.favorite-btn.pulse {
+    animation: pulseAnim 0.4s ease;
+}
+
+/* Responsive tinh tế */
+@media (max-width: 768px) {
+    .movie-card {
+        height: 360px;
+    }
+
+    .movie-poster {
+        height: 250px;
+    }
+
+    .movie-card .card-title {
+        font-size: 0.9rem;
+    }
+}

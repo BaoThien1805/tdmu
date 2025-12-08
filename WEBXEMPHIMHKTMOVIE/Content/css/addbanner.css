@@ -1,0 +1,78 @@
+﻿/* Giới hạn ảnh trong bảng banner */
+#bannerTable img {
+    max-width: 120px; /* chiều rộng tối đa */
+    max-height: 60px; /* chiều cao tối đa */
+    object-fit: cover; /* ảnh luôn vừa khung, không méo */
+    border-radius: 6px;
+    display: block;
+    margin: 0 auto; /* căn giữa ảnh */
+}
+
+/* Căn chỉnh cột hành động gọn hơn */
+#bannerTable td {
+    vertical-align: middle !important;
+}
+
+/* Thu gọn các nút hành động trong bảng */
+#bannerTable .btn {
+    padding: 4px 8px;
+    font-size: 12px;
+}
+/* ============================
+   BANNER TOP – CĂN GIỮA
+============================ */
+.banner-top-area {
+    width: 100%;
+    margin: 25px 0;
+    display: flex;
+    justify-content: center;
+}
+
+.banner-top-wrapper {
+    width: 100%;
+    max-width: 1300px; /* giống Rophim */
+    padding: 0 20px; /* khoảng trống 2 bên */
+    display: flex;
+    justify-content: center;
+}
+
+    .banner-top-wrapper a {
+        width: 100%;
+        display: block;
+        margin: 10px 0;
+    }
+
+.banner-top-img {
+    width: 100%;
+    max-height: 130px;
+    object-fit: contain;
+    border-radius: 10px;
+    box-shadow: 0 0 12px rgba(255,255,255,0.15);
+}
+
+
+/* ============================
+   BANNER MID – CĂN GIỮA
+============================ */
+.banner-mid-wrapper {
+    width: 100%;
+    max-width: 1300px; /* giống banner top */
+    padding: 0 20px; /* khoảng trống 2 bên */
+    margin: 20px auto; /* căn giữa */
+    display: flex;
+    justify-content: center;
+}
+
+    .banner-mid-wrapper a {
+        width: 100%;
+        display: block;
+        margin: 10px 0;
+    }
+
+.banner-mid-img {
+    width: 100%;
+    max-height: 130px;
+    object-fit: contain;
+    border-radius: 10px;
+    box-shadow: 0 0 12px rgba(255,255,255,0.15);
+}

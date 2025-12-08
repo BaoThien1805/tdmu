@@ -1,0 +1,53 @@
+﻿@model IEnumerable<WEBXEMPHIMHKTMOVIE.Models.WatchHistory>
+
+@{
+    ViewBag.Title = "Lịch sử xem phim";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/Content/css/PhimLe.css" />
+}
+
+<div class="container mt-5">
+    <h2 class="fw-bold mb-4 text-center">🕒 Lịch sử xem</h2>
+
+    @if (!Model.Any())
+    {
+        <p class="text-center text-muted mt-4">Bạn chưa xem phim nào.</p>
+    }
+    else
+    {
+        <div class="row g-4">
+
+            @foreach (var item in Model)
+            {
+                var movie = item.Movie;   // dễ đọc hơn
+
+                <div class="col-md-3 col-sm-6 col-6">
+                    <div class="card movie-card h-100">
+
+                        <img src="@Url.Content(
+                                string.IsNullOrEmpty(movie.PosterPath)
+                                ? "~/Content/Images/no-poster.png"
+                                : movie.PosterPath)"
+                             alt="@movie.Title" />
+
+                        <div class="card-body">
+                            <h6 class="card-title">@movie.Title</h6>
+
+                            <span class="text-muted d-block mb-2">
+                                ⏱ @item.WatchedAt.ToString("HH:mm dd/MM/yyyy")
+                            </span>
+
+                            <a href="@Url.Action("Details", "Movies", new { id = movie.MovieId })"
+                               class="btn btn-outline-primary btn-sm">
+                                Xem lại
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            }
+
+        </div>
+    }
+</div>

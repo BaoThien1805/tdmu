@@ -1,0 +1,87 @@
+﻿@{
+    ViewBag.Title = "Đăng ký VIP";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+
+            <div class="panel panel-default shadow">
+                <div class="panel-heading text-center">
+                    <h3 class="panel-title">
+                        👑 NÂNG CẤP TÀI KHOẢN VIP
+                    </h3>
+                </div>
+
+                <div class="panel-body">
+
+                    @if (TempData["Success"] != null)
+                    {
+                        <div class="alert alert-success text-center">
+                            @TempData["Success"]
+                        </div>
+                    }
+
+                    <p class="text-center text-muted mb-4">
+                        Trở thành VIP để <strong>không quảng cáo</strong> và xem phim mượt mà hơn 🚀
+                    </p>
+
+                    @using (Html.BeginForm("RegisterVip", "Account", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <div class="form-group">
+                            <label for="months">⏳ Chọn gói VIP</label>
+                            <select class="form-control" id="months" name="months" required>
+                                <option value="">-- Chọn thời gian --</option>
+                                <option value="1">1 tháng – 29.000đ</option>
+                                <option value="3">3 tháng – 79.000đ</option>
+                                <option value="6">6 tháng – 149.000đ</option>
+                                <option value="12">12 tháng – 259.000đ</option>
+                            </select>
+                        </div>
+
+                        <div class="alert alert-info">
+                            ✅ <strong>Quyền lợi VIP:</strong>
+                            <ul class="mb-0">
+                                <li>🚫 Không hiển thị quảng cáo</li>
+                                <li>⚡ Tải trang nhanh hơn</li>
+                                <li>🎬 Trải nghiệm xem phim mượt mà</li>
+                            </ul>
+                        </div>
+
+                        <button type="submit" class="btn btn-warning btn-block btn-lg">
+                            ⭐ Xác nhận nâng cấp VIP
+                        </button>
+
+                        <a href="@Url.Action("Index","Home")"
+                           class="btn btn-default btn-block mt-2">
+                            ⬅ Quay lại trang chủ
+                        </a>
+                    }
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<style>
+    .panel {
+        border-radius: 10px;
+    }
+
+    .panel-heading {
+        background-color: #f8c146 !important;
+        color: #000 !important;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+    }
+
+    .btn-warning {
+        font-weight: bold;
+        font-size: 16px;
+    }
+</style>
+

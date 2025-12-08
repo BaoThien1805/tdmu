@@ -1,47 +1,89 @@
-﻿using MovieWebApp.Models;
+﻿using System;
 using System.Linq;
 using System.Web.Mvc;
 using System.Web.Security;
+using WEBXEMPHIMHKTMOVIE.Models;
+using BCrypt.Net;
 
-namespace MovieWebApp.Controllers
+namespace WEBXEMPHIMHKTMOVIE.Controllers
 {
     public class AccountController : Controller
     {
-        private MovieWebDbContext db = new MovieWebDbContext();
+        private readonly MovieWebDbContext db = new MovieWebDbContext();
 
-        // GET: Login
+        // =============================
+        // 🔹 GET: Login
+        // =============================
         [HttpGet]
         public ActionResult Login()
         {
             return View();
         }
 
-        // POST: Login
+        // =============================
+        // 🔹 POST: Login
+        // =============================
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Login(string username, string password)
+        public ActionResult Login(string Username, string Password)
         {
-            // Tìm user trong database
-            var user = db.Users.FirstOrDefault(u => u.Username == username && u.PasswordHash == password);
-            if (user != null)
+            if (string.IsNullOrWhiteSpace(Username) || string.IsNullOrWhiteSpace(Password))
             {
-                // Set cookie để duy trì login
-                FormsAuthentication.SetAuthCookie(user.Username, false);
-
-                // Lưu thông tin vào Session để layout hiển thị
-                Session["UserId"] = user.UserId;
-                Session["Username"] = user.Username;
-                Session["FullName"] = user.FullName;
-                Session["Role"] = user.Role;
-
-                return RedirectToAction("Index", "Home");
+                ViewBag.Error = "Vui lòng nhập đầy đủ Email/Tên đăng nhập và Mật khẩu.";
+                return View();
             }
 
-            ViewBag.Error = "Tên đăng nhập hoặc mật khẩu không đúng!";
-            return View();
+            // 🔍 Tìm người dùng theo Email hoặc Username
+            var user = db.Users.FirstOrDefault(u => u.Email == Username || u.FullName == Username);
+            if (user == null)
+            {
+                ViewBag.Error = "Email hoặc mật khẩu không đúng!";
+                return View();
+            }
+
+            // 🔑 Kiểm tra mật khẩu (ưu tiên BCrypt)
+            bool isPasswordValid = false;
+            try
+            {
+                isPasswordValid = BCrypt.Net.BCrypt.Verify(Password, user.PasswordHash);
+            }
+            catch
+            {
+                // nếu dữ liệu cũ chưa mã hóa
+                isPasswordValid = (Password == user.PasswordHash);
+            }
+
+            if (!isPasswordValid)
+            {
+                ViewBag.Error = "Email hoặc mật khẩu không đúng!";
+                return View();
+            }
+
+            // ✅ Đăng nhập thành công
+            FormsAuthentication.SetAuthCookie(user.Email, false);
+            Session["UserId"] = user.UserId;
+            Session["Email"] = user.Email;
+            Session["FullName"] = user.FullName;
+            Session["Role"] = user.Role;
+            // ============================
+            // ✅ VIP LOGIC
+            // ============================
+            bool isVip = user.IsVip &&
+                        (user.VipExpiredAt == null || user.VipExpiredAt > DateTime.Now);
+
+            Session["IsVip"] = isVip;
+            Session["VipExpiredAt"] = user.VipExpiredAt;
+
+            // 🔁 Điều hướng theo vai trò
+            if (!string.IsNullOrEmpty(user.Role) && user.Role.Equals("Admin", StringComparison.OrdinalIgnoreCase))
+                return RedirectToAction("Index", "Home", new { area = "Admin" });
+            else
+                return RedirectToAction("Index", "Home");
         }
 
-        // GET: Logout
+        // =============================
+        // 🔹 Logout
+        // =============================
         public ActionResult Logout()
         {
             FormsAuthentication.SignOut();
@@ -49,51 +91,103 @@ namespace MovieWebApp.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-
-        // GET: Register
+        // =============================
+        // 🔹 GET: Register
+        // =============================
         [HttpGet]
         public ActionResult Register()
         {
             return View();
         }
 
-        // POST: Register
+        // =============================
+        // 🔹 POST: Register
+        // =============================
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Register(User model)
+        public ActionResult Register(string FullName, string Email, string PasswordHash, string PasswordConfirm)
         {
-            if (ModelState.IsValid)
+            if (string.IsNullOrWhiteSpace(FullName) || string.IsNullOrWhiteSpace(Email) || string.IsNullOrWhiteSpace(PasswordHash))
             {
-                // Kiểm tra username trùng
-                if (db.Users.Any(u => u.Username == model.Username))
-                {
-                    ModelState.AddModelError("", "Tên đăng nhập đã tồn tại.");
-                    return View(model);
-                }
-
-                // Kiểm tra email trùng
-                if (db.Users.Any(u => u.Email == model.Email))
-                {
-                    ModelState.AddModelError("", "Email đã tồn tại.");
-                    return View(model);
-                }
-
-                model.Role = "User"; // mặc định là User
-                model.CreatedAt = System.DateTime.Now;
-
-                db.Users.Add(model);
-                db.SaveChanges();
-
-                // Sau khi lưu thì login luôn
-                FormsAuthentication.SetAuthCookie(model.Username, false);
-                Session["UserId"] = model.UserId;
-                Session["Username"] = model.Username;
-                Session["FullName"] = model.FullName;
-                Session["Role"] = model.Role;
-
-                return RedirectToAction("Index", "Home");
+                ModelState.AddModelError("", "Vui lòng nhập đầy đủ thông tin.");
+                return View();
             }
-            return View(model);
+
+            if (PasswordHash != PasswordConfirm)
+            {
+                ModelState.AddModelError("", "Mật khẩu xác nhận không khớp.");
+                return View();
+            }
+
+            if (db.Users.Any(u => u.Email == Email))
+            {
+                ModelState.AddModelError("", "Email đã tồn tại.");
+                return View();
+            }
+
+            var user = new User
+            {
+                FullName = FullName,
+                Email = Email,
+                PasswordHash = BCrypt.Net.BCrypt.HashPassword(PasswordHash),
+                Role = "User",
+                IsVip = false,
+                VipExpiredAt = null,
+                CreatedAt = DateTime.Now
+            };
+
+            db.Users.Add(user);
+            db.SaveChanges();
+
+            // ✅ Tự động đăng nhập
+            FormsAuthentication.SetAuthCookie(user.Email, false);
+            Session["UserId"] = user.UserId;
+            Session["Email"] = user.Email;
+            Session["FullName"] = user.FullName;
+            Session["Role"] = user.Role;
+
+            return RedirectToAction("Index", "Home");
         }
+        // =============================
+        // 🔥 GET: Register VIP
+        // =============================
+        [Authorize]
+        public ActionResult RegisterVip()
+        {
+            return View();
+        }
+
+        // =============================
+        // 🔥 POST: Register VIP
+        // =============================
+        [HttpPost]
+        [Authorize]
+        [ValidateAntiForgeryToken]
+        public ActionResult RegisterVip(int months)
+        {
+            int userId = (int)Session["UserId"];
+            var user = db.Users.Find(userId);
+
+            if (user == null)
+                return RedirectToAction("Login");
+
+            user.IsVip = true;
+
+            // Nếu đang VIP thì cộng thêm, nếu không thì tính từ hôm nay
+            if (user.VipExpiredAt != null && user.VipExpiredAt > DateTime.Now)
+                user.VipExpiredAt = user.VipExpiredAt.Value.AddMonths(months);
+            else
+                user.VipExpiredAt = DateTime.Now.AddMonths(months);
+
+            db.SaveChanges();
+
+            // ✅ Cập nhật lại session
+            Session["IsVip"] = true;
+            Session["VipExpiredAt"] = user.VipExpiredAt;
+
+            TempData["Success"] = "Đăng ký VIP thành công!";
+            return RedirectToAction("Index", "Home");
+        }
+
     }
 }

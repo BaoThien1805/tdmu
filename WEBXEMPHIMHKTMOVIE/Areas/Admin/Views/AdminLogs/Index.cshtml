@@ -1,0 +1,98 @@
+﻿@{
+    ViewBag.Title = "Lịch sử hoạt động Admin";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="container mt-5 mb-4">
+
+    <div class="card shadow-lg border-0 rounded-4">
+
+        <!-- ===== Header ===== -->
+        <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center rounded-top-4">
+            <div class="d-flex align-items-center gap-2">
+                <a href="@Url.Action("Index", "Home", new { area = "Admin" })"
+                   class="btn btn-secondary btn-sm fw-semibold">
+                    ⬅️ Quay lại
+                </a>
+                <h4 class="mb-0">
+                    <i class="bi bi-clock-history me-2"></i> Lịch sử hoạt động Admin
+                </h4>
+            </div>
+
+            <!-- Hiển thị trạng thái Refresh -->
+            <span class="badge bg-success" id="refreshStatus">
+                🔄 Đang cập nhật
+            </span>
+        </div>
+
+        <!-- ===== Table ===== -->
+        <div class="card-body table-responsive">
+            <table class="table table-hover table-bordered align-middle mb-0" id="logTable">
+                <thead class="table-dark">
+                    <tr>
+                        <th style="width:10%">ID</th>
+                        <th style="width:20%">Admin</th>
+                        <th style="width:50%">Hành động</th>
+                        <th style="width:20%">Thời gian</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <!-- AJAX sẽ đổ dữ liệu -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    function loadLogs() {
+
+        $("#refreshStatus").text("⏳ Đang tải...");
+
+        $.ajax({
+            url: "@Url.Action("GetLogs", "AdminLogs")",
+            type: "GET",
+            success: function (data) {
+
+                let rows = "";
+
+                if (data.length === 0) {
+                    rows = `
+                        <tr>
+                            <td colspan="4" class="text-center py-4 text-muted">
+                                <i class="bi bi-exclamation-circle me-2"></i>
+                                Chưa có hoạt động nào.
+                            </td>
+                        </tr>
+                    `;
+                } else {
+                    $.each(data, function (i, log) {
+                        rows += `
+                            <tr>
+                                <td class="fw-semibold">${log.AdminLogId}</td>
+                                <td>${log.AdminName}</td>
+                                <td>${log.Action}</td>
+                                <td>${log.LogTime}</td>
+                            </tr>
+                        `;
+                    });
+                }
+
+                $("#logTable tbody").html(rows);
+                $("#refreshStatus").text("🔄 Cập nhật mỗi 5 giây");
+            },
+            error: function () {
+                $("#refreshStatus").text("❌ Lỗi tải dữ liệu");
+            }
+        });
+    }
+
+    // Tải ban đầu
+    loadLogs();
+
+    // Tự refresh mỗi 5 giây
+    setInterval(loadLogs, 5000);
+</script>

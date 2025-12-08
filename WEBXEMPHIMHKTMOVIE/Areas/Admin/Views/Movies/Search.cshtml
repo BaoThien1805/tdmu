@@ -1,0 +1,65 @@
+﻿@model IEnumerable<WEBXEMPHIMHKTMOVIE.Models.Movie>
+@{
+    ViewBag.Title = "Kết quả tìm kiếm";
+    var query = ViewBag.Query as string;
+    var total = (int)ViewBag.TotalResults;
+    int currentPage = ViewBag.CurrentPage ?? 1;
+    int totalPages = ViewBag.TotalPages ?? 1;
+}
+
+<div class="container mt-4">
+    <h3>Kết quả tìm kiếm cho: <span class="text-primary">"@query"</span></h3>
+    <p>Tìm thấy <b>@total</b> phim.</p>
+
+    <div class="row">
+        @if (!Model.Any())
+        {
+            <div class="col-12">
+                <p class="text-danger">Không tìm thấy phim nào.</p>
+            </div>
+        }
+        else
+        {
+            foreach (var movie in Model)
+            {
+                <div class="col-md-3 col-6 mb-4">
+                    <div class="card h-100 shadow-sm">
+                        <img src="@Url.Content(movie.PosterPath)"
+                             class="card-img-top"
+                             alt="@movie.Title"
+                             style="height:200px; object-fit:cover;" />
+                        <div class="card-body">
+                            <h6 class="card-title">@movie.Title</h6>
+                            <p class="text-muted">👁️ @movie.ViewCount lượt xem</p>
+                            <a href="@Url.Action("Details", "Movies", new { id = movie.MovieId })"
+                               class="btn btn-sm btn-outline-primary w-100">Xem chi tiết</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+
+    <!-- PHÂN TRANG -->
+    @if (totalPages > 1)
+    {
+        <nav>
+            <ul class="pagination justify-content-center">
+                <li class="page-item @(currentPage == 1 ? "disabled" : "")">
+                    <a class="page-link" href="@Url.Action("Search", new { query = query, page = currentPage - 1 })">«</a>
+                </li>
+
+                @for (int i = 1; i <= totalPages; i++)
+                {
+                    <li class="page-item @(i == currentPage ? "active" : "")">
+                        <a class="page-link" href="@Url.Action("Search", new { query = query, page = i })">@i</a>
+                    </li>
+                }
+
+                <li class="page-item @(currentPage == totalPages ? "disabled" : "")">
+                    <a class="page-link" href="@Url.Action("Search", new { query = query, page = currentPage + 1 })">»</a>
+                </li>
+            </ul>
+        </nav>
+    }
+</div>

@@ -1,26 +1,22 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "D:\\HK1_Nam3\\ThietKeWeb\\WEBXEMPHIMHKTMOVIE\\",
+  "WorkspaceRootPath": "D:\\HK1_Nam3\\Test\\WEBXEMPHIMHKTMOVIE\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{F73DBB90-2EE8-4B45-99A4-B073ED595864}|WEBXEMPHIMHKTMOVIE\\WEBXEMPHIMHKTMOVIE.csproj|D:\\HK1_Nam3\\ThietKeWeb\\WEBXEMPHIMHKTMOVIE\\webxemphimhktmovie\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{F73DBB90-2EE8-4B45-99A4-B073ED595864}|WEBXEMPHIMHKTMOVIE\\WEBXEMPHIMHKTMOVIE.csproj|solutionrelative:webxemphimhktmovie\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F73DBB90-2EE8-4B45-99A4-B073ED595864}|WEBXEMPHIMHKTMOVIE\\WEBXEMPHIMHKTMOVIE.csproj|d:\\hk1_nam3\\thietkeweb\\webxemphimhktmovie\\webxemphimhktmovie\\content\\site.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
-      "RelativeMoniker": "D:0:0:{F73DBB90-2EE8-4B45-99A4-B073ED595864}|WEBXEMPHIMHKTMOVIE\\WEBXEMPHIMHKTMOVIE.csproj|solutionrelative:webxemphimhktmovie\\content\\site.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F73DBB90-2EE8-4B45-99A4-B073ED595864}|WEBXEMPHIMHKTMOVIE\\WEBXEMPHIMHKTMOVIE.csproj|d:\\hk1_nam3\\thietkeweb\\webxemphimhktmovie\\webxemphimhktmovie\\views\\movies\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{F73DBB90-2EE8-4B45-99A4-B073ED595864}|WEBXEMPHIMHKTMOVIE\\WEBXEMPHIMHKTMOVIE.csproj|solutionrelative:webxemphimhktmovie\\views\\movies\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F73DBB90-2EE8-4B45-99A4-B073ED595864}|WEBXEMPHIMHKTMOVIE\\WEBXEMPHIMHKTMOVIE.csproj|d:\\hk1_nam3\\thietkeweb\\webxemphimhktmovie\\webxemphimhktmovie\\controllers\\moviescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{F73DBB90-2EE8-4B45-99A4-B073ED595864}|WEBXEMPHIMHKTMOVIE\\WEBXEMPHIMHKTMOVIE.csproj|d:\\hk1_nam3\\test\\webxemphimhktmovie\\webxemphimhktmovie\\controllers\\moviescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{F73DBB90-2EE8-4B45-99A4-B073ED595864}|WEBXEMPHIMHKTMOVIE\\WEBXEMPHIMHKTMOVIE.csproj|solutionrelative:webxemphimhktmovie\\controllers\\moviescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F73DBB90-2EE8-4B45-99A4-B073ED595864}|WEBXEMPHIMHKTMOVIE\\WEBXEMPHIMHKTMOVIE.csproj|d:\\hk1_nam3\\thietkeweb\\webxemphimhktmovie\\webxemphimhktmovie\\models\\favorite.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F73DBB90-2EE8-4B45-99A4-B073ED595864}|WEBXEMPHIMHKTMOVIE\\WEBXEMPHIMHKTMOVIE.csproj|solutionrelative:webxemphimhktmovie\\models\\favorite.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{F73DBB90-2EE8-4B45-99A4-B073ED595864}|WEBXEMPHIMHKTMOVIE\\WEBXEMPHIMHKTMOVIE.csproj|d:\\hk1_nam3\\test\\webxemphimhktmovie\\webxemphimhktmovie\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F73DBB90-2EE8-4B45-99A4-B073ED595864}|WEBXEMPHIMHKTMOVIE\\WEBXEMPHIMHKTMOVIE.csproj|solutionrelative:webxemphimhktmovie\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F73DBB90-2EE8-4B45-99A4-B073ED595864}|WEBXEMPHIMHKTMOVIE\\WEBXEMPHIMHKTMOVIE.csproj|d:\\hk1_nam3\\test\\webxemphimhktmovie\\webxemphimhktmovie\\controllers\\watchhistorycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F73DBB90-2EE8-4B45-99A4-B073ED595864}|WEBXEMPHIMHKTMOVIE\\WEBXEMPHIMHKTMOVIE.csproj|solutionrelative:webxemphimhktmovie\\controllers\\watchhistorycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F73DBB90-2EE8-4B45-99A4-B073ED595864}|WEBXEMPHIMHKTMOVIE\\WEBXEMPHIMHKTMOVIE.csproj|d:\\hk1_nam3\\test\\webxemphimhktmovie\\webxemphimhktmovie\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{F73DBB90-2EE8-4B45-99A4-B073ED595864}|WEBXEMPHIMHKTMOVIE\\WEBXEMPHIMHKTMOVIE.csproj|solutionrelative:webxemphimhktmovie\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     }
   ],
   "DocumentGroupContainers": [
@@ -30,33 +26,19 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 3,
               "Title": "Index.cshtml",
-              "DocumentMoniker": "D:\\HK1_Nam3\\ThietKeWeb\\WEBXEMPHIMHKTMOVIE\\WEBXEMPHIMHKTMOVIE\\Views\\Home\\Index.cshtml",
+              "DocumentMoniker": "D:\\HK1_Nam3\\Test\\WEBXEMPHIMHKTMOVIE\\WEBXEMPHIMHKTMOVIE\\Views\\Home\\Index.cshtml",
               "RelativeDocumentMoniker": "WEBXEMPHIMHKTMOVIE\\Views\\Home\\Index.cshtml",
-              "ToolTip": "D:\\HK1_Nam3\\ThietKeWeb\\WEBXEMPHIMHKTMOVIE\\WEBXEMPHIMHKTMOVIE\\Views\\Home\\Index.cshtml",
+              "ToolTip": "D:\\HK1_Nam3\\Test\\WEBXEMPHIMHKTMOVIE\\WEBXEMPHIMHKTMOVIE\\Views\\Home\\Index.cshtml",
               "RelativeToolTip": "WEBXEMPHIMHKTMOVIE\\Views\\Home\\Index.cshtml",
-              "ViewState": "AgIAAC8AAAAAAAAAAAAAAEEAAAA0AAAAAAAAAA==",
+              "ViewState": "AgIAAAoBAAAAAAAAAAAiwDsBAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2025-09-26T16:44:45.238Z",
-              "IsPinned": true,
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "site.css",
-              "DocumentMoniker": "D:\\HK1_Nam3\\ThietKeWeb\\WEBXEMPHIMHKTMOVIE\\WEBXEMPHIMHKTMOVIE\\Content\\site.css",
-              "RelativeDocumentMoniker": "WEBXEMPHIMHKTMOVIE\\Content\\site.css",
-              "ToolTip": "D:\\HK1_Nam3\\ThietKeWeb\\WEBXEMPHIMHKTMOVIE\\WEBXEMPHIMHKTMOVIE\\Content\\site.css",
-              "RelativeToolTip": "WEBXEMPHIMHKTMOVIE\\Content\\site.css",
-              "ViewState": "AgIAADYAAAAAAAAAAAAQwGwAAAAQAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
-              "WhenOpened": "2025-09-27T11:59:36.778Z",
               "IsPinned": true,
               "EditorCaption": ""
             },
@@ -74,41 +56,41 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 0,
               "Title": "MoviesController.cs",
-              "DocumentMoniker": "D:\\HK1_Nam3\\ThietKeWeb\\WEBXEMPHIMHKTMOVIE\\WEBXEMPHIMHKTMOVIE\\Controllers\\MoviesController.cs",
+              "DocumentMoniker": "D:\\HK1_Nam3\\Test\\WEBXEMPHIMHKTMOVIE\\WEBXEMPHIMHKTMOVIE\\Controllers\\MoviesController.cs",
               "RelativeDocumentMoniker": "WEBXEMPHIMHKTMOVIE\\Controllers\\MoviesController.cs",
-              "ToolTip": "D:\\HK1_Nam3\\ThietKeWeb\\WEBXEMPHIMHKTMOVIE\\WEBXEMPHIMHKTMOVIE\\Controllers\\MoviesController.cs",
+              "ToolTip": "D:\\HK1_Nam3\\Test\\WEBXEMPHIMHKTMOVIE\\WEBXEMPHIMHKTMOVIE\\Controllers\\MoviesController.cs",
               "RelativeToolTip": "WEBXEMPHIMHKTMOVIE\\Controllers\\MoviesController.cs",
-              "ViewState": "AgIAADMAAAAAAAAAAAAcwD4AAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAABAAAAAAAAAAAwwAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-28T12:35:07.944Z",
+              "WhenOpened": "2025-12-08T01:01:50.929Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "Favorite.cs",
-              "DocumentMoniker": "D:\\HK1_Nam3\\ThietKeWeb\\WEBXEMPHIMHKTMOVIE\\WEBXEMPHIMHKTMOVIE\\Models\\Favorite.cs",
-              "RelativeDocumentMoniker": "WEBXEMPHIMHKTMOVIE\\Models\\Favorite.cs",
-              "ToolTip": "D:\\HK1_Nam3\\ThietKeWeb\\WEBXEMPHIMHKTMOVIE\\WEBXEMPHIMHKTMOVIE\\Models\\Favorite.cs",
-              "RelativeToolTip": "WEBXEMPHIMHKTMOVIE\\Models\\Favorite.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAmAAAAAAAAAA==",
+              "DocumentIndex": 1,
+              "Title": "HomeController.cs",
+              "DocumentMoniker": "D:\\HK1_Nam3\\Test\\WEBXEMPHIMHKTMOVIE\\WEBXEMPHIMHKTMOVIE\\Controllers\\HomeController.cs",
+              "RelativeDocumentMoniker": "WEBXEMPHIMHKTMOVIE\\Controllers\\HomeController.cs",
+              "ToolTip": "D:\\HK1_Nam3\\Test\\WEBXEMPHIMHKTMOVIE\\WEBXEMPHIMHKTMOVIE\\Controllers\\HomeController.cs",
+              "RelativeToolTip": "WEBXEMPHIMHKTMOVIE\\Controllers\\HomeController.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-28T12:30:25.742Z",
+              "WhenOpened": "2025-12-08T01:01:28.93Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "Details.cshtml",
-              "DocumentMoniker": "D:\\HK1_Nam3\\ThietKeWeb\\WEBXEMPHIMHKTMOVIE\\WEBXEMPHIMHKTMOVIE\\Views\\Movies\\Details.cshtml",
-              "RelativeDocumentMoniker": "WEBXEMPHIMHKTMOVIE\\Views\\Movies\\Details.cshtml",
-              "ToolTip": "D:\\HK1_Nam3\\ThietKeWeb\\WEBXEMPHIMHKTMOVIE\\WEBXEMPHIMHKTMOVIE\\Views\\Movies\\Details.cshtml",
-              "RelativeToolTip": "WEBXEMPHIMHKTMOVIE\\Views\\Movies\\Details.cshtml",
-              "ViewState": "AgIAAA0AAAAAAAAAAAAQwCEAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-09-28T11:47:41.913Z",
+              "Title": "WatchHistoryController.cs",
+              "DocumentMoniker": "D:\\HK1_Nam3\\Test\\WEBXEMPHIMHKTMOVIE\\WEBXEMPHIMHKTMOVIE\\Controllers\\WatchHistoryController.cs",
+              "RelativeDocumentMoniker": "WEBXEMPHIMHKTMOVIE\\Controllers\\WatchHistoryController.cs",
+              "ToolTip": "D:\\HK1_Nam3\\Test\\WEBXEMPHIMHKTMOVIE\\WEBXEMPHIMHKTMOVIE\\Controllers\\WatchHistoryController.cs",
+              "RelativeToolTip": "WEBXEMPHIMHKTMOVIE\\Controllers\\WatchHistoryController.cs",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAAwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-08T01:01:18.363Z",
               "EditorCaption": ""
             }
           ]

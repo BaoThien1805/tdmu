@@ -1,0 +1,192 @@
+﻿@{
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+    ViewBag.Title = "Quản lý Banner";
+}
+
+<link href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="~/Content/css/addbanner.css" />
+
+<div class="container-fluid mt-4">
+
+    <!-- Tiêu đề + nút thêm -->
+    <div class="d-flex justify-content-between mb-3">
+        <h2 class="fw-bold">Quản lý Banner quảng cáo</h2>
+        <button class="btn btn-success" onclick="showAddModal()">
+            <i class="fa fa-plus"></i> Thêm Banner
+        </button>
+    </div>
+
+    <!-- Bảng danh sách -->
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <table id="bannerTable" class="table table-bordered table-striped">
+                <thead class="table-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Ảnh</th>
+                        <th>Tiêu đề</th>
+                        <th>Vị trí</th>
+                        <th>Kích hoạt</th>
+                        <th>Hành động</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- =============== MODAL ADD/EDIT =============== -->
+<div class="modal fade" id="bannerModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header bg-primary text-white">
+                <h4 id="modalTitle" class="modal-title"></h4>
+            </div>
+
+            <div class="modal-body">
+                <form id="bannerForm" enctype="multipart/form-data">
+
+                    <input type="hidden" id="BannerId" name="BannerId" />
+
+                    <!-- Tiêu đề -->
+                    <div class="mb-3">
+                        <label class="form-label">Tiêu đề banner</label>
+                        <input class="form-control" name="Title" id="Title" placeholder="Nhập tiêu đề..." />
+                    </div>
+
+                    <!-- Link điều hướng -->
+                    <div class="mb-3">
+                        <label class="form-label">URL nhắm đến</label>
+                        <input class="form-control" name="TargetUrl" id="TargetUrl" placeholder="https://..." />
+                    </div>
+
+                    <!-- Vị trí -->
+                    <div class="mb-3">
+                        <label class="form-label">Vị trí hiển thị</label>
+                        <select class="form-control" id="Position" name="Position">
+                            <option value="HomeTop">Trang chủ - Trên cùng</option>
+                            <option value="HomeSide">Trang chủ - ở giữa</option>
+                            <option value="HomeBottom">Trang chủ - cuối</option>
+                            <option value="HomePopup">Trang chủ - nổi</option>
+                        </select>
+                    </div>
+
+                    <!-- Ảnh -->
+                    <div class="mb-3">
+                        <label class="form-label">Chọn hình ảnh</label>
+                        <input type="file" name="img" id="img" class="form-control" />
+                        <small class="text-muted">Chấp nhận: JPG, PNG. Kích thước khuyến nghị: 1200x300</small>
+                    </div>
+
+                    <!-- Kích hoạt -->
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" id="IsActive" name="IsActive" />
+                        <label class="form-check-label">Kích hoạt banner</label>
+                    </div>
+
+                </form>
+
+                <div class="text-end">
+                    <button class="btn btn-primary" onclick="saveBanner()">Lưu</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+
+<script>
+    var table;
+
+    $(document).ready(function () {
+
+        table = $("#bannerTable").DataTable({
+            ajax: {
+                url: "/Admin/AdsBanners/GetList",
+                dataSrc: "data"
+            },
+            columns: [
+                { data: "BannerId" },
+                {
+                    data: "ImagePath",
+                    render: img => `<img src="${img}" style="height:60px; border-radius:4px"/>`
+                },
+                { data: "Title" },
+                { data: "Position" },
+                {
+                    data: "IsActive",
+                    render: active => active ? "✔" : "✖"
+                },
+                {
+                    data: "BannerId",
+                    render: id => `
+                        <button class="btn btn-warning btn-sm" onclick="editBanner(${id})">Sửa</button>
+                        <button class="btn btn-danger btn-sm" onclick="deleteBanner(${id})">Xóa</button>
+                    `
+                }
+            ]
+        });
+
+    });
+
+    function showAddModal() {
+        $("#modalTitle").text("Thêm Banner");
+        $("#bannerForm")[0].reset();
+        $("#BannerId").val("");
+        $("#bannerModal").modal("show");
+    }
+
+    function saveBanner() {
+        var form = new FormData($("#bannerForm")[0]);
+
+        var url = $("#BannerId").val() === ""
+            ? "/Admin/AdsBanners/CreateBanner"
+            : "/Admin/AdsBanners/UpdateBanner";
+
+        $.ajax({
+            url: url,
+            method: "POST",
+            data: form,
+            processData: false,
+            contentType: false,
+            success: function (res) {
+                alert(res.message);
+                if (res.success) {
+                    $("#bannerModal").modal("hide");
+                    table.ajax.reload();
+                }
+            }
+        });
+    }
+
+    function editBanner(id) {
+        $.get("/Admin/AdsBanners/GetBanner?id=" + id, function (res) {
+
+            if (!res.success) return alert("Không tìm thấy banner!");
+
+            var b = res.data;
+
+            $("#modalTitle").text("Sửa Banner");
+            $("#BannerId").val(b.BannerId);
+            $("#Title").val(b.Title);
+            $("#TargetUrl").val(b.TargetUrl);
+            $("#Position").val(b.Position);
+            $("#IsActive").prop("checked", b.IsActive);
+
+            $("#bannerModal").modal("show");
+        });
+    }
+
+    function deleteBanner(id) {
+        if (!confirm("Bạn có chắc muốn xóa banner này?")) return;
+
+        $.post("/Admin/AdsBanners/DeleteBanner", { id: id }, function (res) {
+            alert(res.message);
+            if (res.success) table.ajax.reload();
+        });
+    }
+</script>

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using System.Web.Routing;
 
 namespace WEBXEMPHIMHKTMOVIE
@@ -13,11 +9,13 @@ namespace WEBXEMPHIMHKTMOVIE
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+            // ✅ Route mặc định (ngoài khu vực Admin)
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
-            );
+                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional },
+                namespaces: new[] { "WEBXEMPHIMHKTMOVIE.Controllers" } // 👈 namespace chính của HomeController
+            ).DataTokens["UseNamespaceFallback"] = false;
         }
     }
 }

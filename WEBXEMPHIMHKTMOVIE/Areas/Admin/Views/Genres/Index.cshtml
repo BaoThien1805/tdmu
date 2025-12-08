@@ -1,0 +1,104 @@
+﻿@model IEnumerable<WEBXEMPHIMHKTMOVIE.Models.Genre>
+
+@{
+    ViewBag.Title = "Quản lý thể loại";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        @TempData["Error"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+}
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData["Success"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+}
+
+
+<div class="container mt-5 mb-4">
+    <div class="card shadow-lg border-0 rounded-4">
+        <!-- ===== Header ===== -->
+        <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center rounded-top-4">
+            <div class="d-flex align-items-center gap-2">
+                <!-- 🔙 Nút quay lại -->
+                <a href="@Url.Action("Index", "Home", new { area = "Admin" })"
+                   class="btn btn-secondary btn-sm fw-semibold">
+                    ⬅️ Quay lại
+                </a>
+                <h4 class="mb-0">
+                    <i class="bi bi-tags-fill me-2"></i> Danh sách thể loại
+                </h4>
+            </div>
+
+            <!-- ➕ Nút thêm thể loại -->
+            <a href="@Url.Action("Create", "Genres", new { area = "Admin" })"
+               class="btn btn-success btn-sm fw-semibold">
+                <i class="bi bi-plus-circle me-1"></i> Thêm thể loại
+            </a>
+        </div>
+
+        <!-- ===== Table ===== -->
+        <div class="card-body table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-dark">
+                    <tr>
+                        <th style="width:70%">Tên thể loại</th>
+                        <th class="text-center" style="width:30%">Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null && Model.Any())
+                    {
+                        int i = 1;
+                        foreach (var item in Model)
+                        {
+                            <tr>
+                                <td class="fw-semibold">@item.GenreName</td>
+                                <td class="text-center">
+                                    <!-- 🔍 Chi tiết -->
+                                    <a href="@Url.Action("Details", "Genres", new { area = "Admin", id = item.GenreId })"
+                                       class="btn btn-info btn-sm text-white me-1" title="Xem chi tiết">
+                                        🔍
+                                    </a>
+                                    <!-- ✏️ Sửa -->
+                                    <a href="@Url.Action("Edit", "Genres", new { area = "Admin", id = item.GenreId })"
+                                       class="btn btn-warning btn-sm me-1 text-dark" title="Chỉnh sửa">
+                                        ✏️
+                                    </a>
+                                    <!-- 🗑️ Xóa -->
+                                    <a href="@Url.Action("Delete", "Genres", new { area = "Admin", id = item.GenreId })"
+                                       class="btn btn-danger btn-sm"
+                                       onclick="return confirm('Bạn có chắc muốn xóa thể loại này không?')"
+                                       title="Xóa thể loại">
+                                        🗑️
+                                    </a>
+                                </td>
+                            </tr>
+                            i++;
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="2" class="text-center py-4 text-muted">
+                                <i class="bi bi-exclamation-circle me-2"></i> Chưa có thể loại nào trong cơ sở dữ liệu.
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    setTimeout(function () {
+        $(".alert").fadeOut(500);
+    }, 3000);
+</script>

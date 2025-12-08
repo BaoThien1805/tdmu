@@ -1,0 +1,342 @@
+﻿/* ================================================
+   🎬 MOVIE DETAIL PAGE (Chi tiết phim)
+   ================================================ */
+.page-detail {
+    background-color: #222;
+    color: #f5f5f5;
+    padding: 40px 0;
+    min-height: 100vh;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* ==================== CARD THÔNG TIN CHÍNH ==================== */
+.movie-detail-card {
+    background-color: #1b1b1b;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+    padding: 30px;
+    color: #ddd;
+    transition: transform 0.3s ease;
+}
+
+    .movie-detail-card:hover {
+        transform: translateY(-3px);
+    }
+
+/* ==================== POSTER ==================== */
+.movie-detail-poster {
+    width: 100%;
+    max-height: 500px;
+    object-fit: cover;
+    border-radius: 10px;
+    border: 3px solid #333;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
+}
+
+/* ==================== THÔNG TIN PHIM ==================== */
+.movie-detail-info h2 {
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 15px;
+}
+
+.movie-detail-info p {
+    font-size: 1rem;
+    color: #bbb;
+    margin-bottom: 6px;
+}
+
+/* ==================== MÔ TẢ PHIM (XEM THÊM) ==================== */
+.movie-description-container {
+    position: relative;
+    max-width: 100%;
+    margin-top: 15px;
+}
+
+.movie-description {
+    color: #ddd;
+    font-size: 1rem;
+    line-height: 1.6;
+    overflow: hidden;
+    max-height: 120px;
+    transition: max-height 0.4s ease;
+    background-color: rgba(255, 255, 255, 0.03);
+    padding: 10px 15px;
+    border-radius: 8px;
+}
+
+    .movie-description.expanded {
+        max-height: 1000px;
+    }
+
+.btn-toggle-description {
+    background: none;
+    color: #0d6efd;
+    border: none;
+    font-weight: 500;
+    margin-top: 6px;
+    cursor: pointer;
+    padding: 0;
+    text-decoration: underline;
+    transition: color 0.2s;
+}
+
+    .btn-toggle-description:hover {
+        color: #66b2ff;
+    }
+
+/* ==================== NÚT HÀNH ĐỘNG ==================== */
+.movie-actions {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+    .movie-actions .btn {
+        font-weight: 600;
+        border-radius: 6px;
+        transition: all 0.3s ease;
+    }
+
+    /* Nút xem phim */
+    .movie-actions .btn-primary {
+        background-color: #007bff;
+        border: none;
+        padding: 8px 20px;
+    }
+
+        .movie-actions .btn-primary:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+
+    /* Nút yêu thích */
+    .movie-actions .btn-outline-danger {
+        border: 1px solid #dc3545;
+        color: #dc3545;
+        background: transparent;
+        padding: 8px 16px;
+    }
+
+        .movie-actions .btn-outline-danger:hover,
+        .movie-actions .btn-danger {
+            background-color: #dc3545;
+            color: #fff;
+            transform: scale(1.05);
+        }
+
+/* Lượt xem */
+.featured-views {
+    display: inline-flex;
+    align-items: center;
+    color: #bbb;
+    font-size: 0.9rem;
+    background-color: rgba(255, 255, 255, 0.08);
+    padding: 4px 10px;
+    border-radius: 20px;
+}
+
+/* ==================== ĐÁNH GIÁ PHIM ==================== */
+.movie-rating {
+    margin-top: 50px;
+    background-color: #111;
+    padding: 25px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: inset 0 0 15px rgba(255, 255, 255, 0.05);
+}
+
+    .movie-rating h4 {
+        color: #fff;
+        font-weight: 600;
+        margin-bottom: 15px;
+    }
+
+.star {
+    cursor: pointer;
+    font-size: 2rem;
+    color: #ccc;
+    transition: color 0.2s, transform 0.2s;
+    margin: 0 3px;
+}
+
+    .star:hover {
+        transform: scale(1.1);
+        color: #FFD700;
+    }
+
+/* ==================== BÌNH LUẬN PHIM ==================== */
+.movie-comments {
+    margin-top: 60px;
+}
+
+    .movie-comments h4 {
+        color: #fff;
+        font-weight: bold;
+        margin-bottom: 15px;
+    }
+
+.comment-box textarea {
+    background-color: #111;
+    color: #fff;
+    border: 1px solid #444;
+    border-radius: 8px;
+    width: 100%;
+    resize: none;
+    padding: 10px;
+    transition: 0.3s;
+}
+
+    .comment-box textarea:focus {
+        outline: none;
+        border-color: #007bff;
+        box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    }
+
+/* Nút gửi bình luận */
+.comment-box .btn-success {
+    background-color: #28a745;
+    border: none;
+    transition: background-color 0.3s;
+}
+
+    .comment-box .btn-success:hover {
+        background-color: #1e7e34;
+    }
+
+/* Danh sách bình luận */
+.comment-list {
+    background-color: #1a1a1a;
+    border-radius: 8px;
+    padding: 15px;
+    margin-top: 10px;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.comment-item {
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    padding: 10px 15px;
+    margin-bottom: 12px;
+    transition: transform 0.2s ease;
+}
+
+    .comment-item:hover {
+        transform: translateX(3px);
+    }
+
+    .comment-item strong {
+        color: #FFD700;
+    }
+
+    .comment-item p {
+        color: #eee;
+        margin-bottom: 0;
+    }
+
+/* ==================== PHIM ĐỀ CỬ ==================== */
+.page-detail .featured-movies {
+    margin-top: 50px;
+    background-color: #111;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: inset 0 0 15px rgba(255, 255, 255, 0.05);
+}
+
+.page-detail .featured-card {
+    background-color: #1a1a1a;
+    border-radius: 10px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+    .page-detail .featured-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.6);
+    }
+
+/* Poster */
+.page-detail .featured-poster {
+    width: 100%;
+    height: 350px;
+    object-fit: cover;
+    border-bottom: 2px solid #222;
+    transition: transform 0.4s ease, filter 0.3s ease;
+}
+
+.page-detail .featured-card:hover .featured-poster {
+    transform: scale(1.05);
+    filter: brightness(1.1);
+}
+
+/* Tên phim */
+.page-detail .featured-title {
+    color: #fff;
+    font-size: 1.05rem;
+    margin-top: 10px;
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
+    min-height: 42px;
+}
+
+/* Khu vực hành động */
+.page-detail .featured-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 6px;
+    margin: 10px 0 12px;
+    padding: 0 6px;
+}
+
+/* Nút xem chi tiết */
+.page-detail .featured-btn-xem {
+    background-color: #007bff;
+    color: #fff;
+    padding: 5px 10px;
+    font-size: 0.9rem;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    flex: 1;
+    text-align: center;
+}
+
+    .page-detail .featured-btn-xem:hover {
+        background-color: #0056b3;
+        transform: scale(1.05);
+    }
+
+/* Nút yêu thích */
+.page-detail .featured-fav-btn {
+    background: none;
+    border: 1px solid #dc3545;
+    color: #dc3545;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    padding: 4px 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+    .page-detail .featured-fav-btn:hover {
+        background: #dc3545;
+        color: #fff;
+    }
+
+/* Lượt xem */
+.page-detail .featured-views {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    color: #ccc;
+    font-size: 0.9rem;
+    background-color: rgba(255, 255, 255, 0.05);
+    padding: 3px 8px;
+    border-radius: 20px;
+    white-space: nowrap;
+}

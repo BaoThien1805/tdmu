@@ -1,0 +1,46 @@
+﻿@model WEBXEMPHIMHKTMOVIE.Models.User
+@{
+    ViewBag.Title = "Xóa người dùng";
+}
+
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+
+            <div class="card shadow-sm border-danger">
+                <div class="card-header bg-danger text-white">
+                    <h4 class="mb-0">⚠️ Xóa người dùng</h4>
+                </div>
+
+                <div class="card-body">
+                    <p class="text-muted">Bạn có chắc chắn muốn xóa người dùng này? Hành động này không thể hoàn tác.</p>
+
+                    <dl class="row">
+                        <dt class="col-sm-4">Họ tên:</dt>
+                        <dd class="col-sm-8">@Model.FullName</dd>
+
+                        <dt class="col-sm-4">Email:</dt>
+                        <dd class="col-sm-8">@Model.Email</dd>
+
+                        <dt class="col-sm-4">Quyền:</dt>
+                        <dd class="col-sm-8">@Model.Role</dd>
+                    </dl>
+
+                    @using (Html.BeginForm("Delete", "Users", new { area = "Admin" }, FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.HiddenFor(model => model.UserId)
+
+                        <div class="d-flex justify-content-between mt-4">
+                            <button type="submit" class="btn btn-danger w-50 me-2">
+                                🗑️ Xác nhận xóa
+                            </button>
+                            @Html.ActionLink("Hủy", "Index", "Users", new { area = "Admin" }, new { @class = "btn btn-secondary w-50 ms-2" })
+                        </div>
+                    }
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

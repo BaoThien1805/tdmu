@@ -1,11 +1,15 @@
-﻿@model IEnumerable<MovieWebApp.Models.Movie>
+﻿@model IEnumerable<WEBXEMPHIMHKTMOVIE.Models.Movie>
+
 @{
     ViewBag.Title = "Kết quả tìm kiếm";
-    var query = ViewBag.Query as string;
-    var total = (int)ViewBag.TotalResults;
-    int currentPage = ViewBag.CurrentPage ?? 1;
-    int totalPages = ViewBag.TotalPages ?? 1;
+
+    string query = ViewBag.Query as string ?? "";
+    int total = Convert.ToInt32(ViewBag.TotalResults ?? 0);
+    int currentPage = Convert.ToInt32(ViewBag.CurrentPage ?? 1);
+    int totalPages = Convert.ToInt32(ViewBag.TotalPages ?? 1);
 }
+
+<link rel="stylesheet" href="~/Content/css/Search.css" />
 
 <div class="container mt-4">
     <h3>Kết quả tìm kiếm cho: <span class="text-primary">"@query"</span></h3>
@@ -22,17 +26,40 @@
         {
             foreach (var movie in Model)
             {
+                string finalPoster = string.IsNullOrEmpty(movie.PosterPath)
+                    ? Url.Content("~/Content/Images/no-image.jpg")
+                    : Url.Content(movie.PosterPath);
+
+                string linkToMovie = movie.IsSeries
+                    ? Url.Action("Watch", "Movies", new { id = movie.MovieId, episodeId = 1 })
+                    : Url.Action("Watch", "Movies", new { id = movie.MovieId });
+
                 <div class="col-md-3 col-6 mb-4">
-                    <div class="card h-100 shadow-sm">
-                        <img src="@Url.Content(movie.PosterPath)"
-                             class="card-img-top"
-                             alt="@movie.Title"
-                             style="height:200px; object-fit:cover;" />
+                    <div class="movie-card">
+
+                        <a href="@linkToMovie">
+                            <img src="@finalPoster"
+                                 alt="@movie.Title" />
+                        </a>
+
                         <div class="card-body">
-                            <h6 class="card-title">@movie.Title</h6>
-                            <p class="text-muted">👁️ @movie.ViewCount lượt xem</p>
-                            <a href="@Url.Action("Details", "Movies", new { id = movie.MovieId })"
-                               class="btn btn-sm btn-outline-primary w-100">Xem chi tiết</a>
+                            <h6 class="card-title">
+                                @movie.Title
+
+                                @if (movie.IsSeries)
+                                {
+                                    <span class="badge badge-warning ms-1">Series</span>
+                                }
+                            </h6>
+
+                            <p class="text-muted">
+                                👁️ @movie.ViewCount lượt xem
+                            </p>
+
+                            <a href="@linkToMovie"
+                               class="btn btn-sm btn-outline-primary w-100">
+                                @(movie.IsSeries ? "Xem phim bộ" : "Xem ngay")
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -45,6 +72,7 @@
     {
         <nav>
             <ul class="pagination justify-content-center">
+
                 <li class="page-item @(currentPage == 1 ? "disabled" : "")">
                     <a class="page-link" href="@Url.Action("Search", new { query = query, page = currentPage - 1 })">«</a>
                 </li>
@@ -52,13 +80,15 @@
                 @for (int i = 1; i <= totalPages; i++)
                 {
                     <li class="page-item @(i == currentPage ? "active" : "")">
-                        <a class="page-link" href="@Url.Action("Search", new { query = query, page = i })">@i</a>
+                        <a class="page-link"
+                           href="@Url.Action("Search", new { query = query, page = i })">@i</a>
                     </li>
                 }
 
                 <li class="page-item @(currentPage == totalPages ? "disabled" : "")">
                     <a class="page-link" href="@Url.Action("Search", new { query = query, page = currentPage + 1 })">»</a>
                 </li>
+
             </ul>
         </nav>
     }

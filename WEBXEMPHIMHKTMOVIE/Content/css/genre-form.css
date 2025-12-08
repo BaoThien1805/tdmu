@@ -1,0 +1,74 @@
+﻿/* 🎨 CSS riêng cho trang thêm thể loại */
+
+body {
+    background: radial-gradient(circle at center, #0d1117, #000);
+    color: #fff;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.genre-create-container {
+    max-width: 600px;
+    margin: 100px auto;
+    padding: 20px;
+}
+
+.genre-card {
+    background-color: #1a1f2b;
+    border-radius: 15px;
+    border: 1px solid #2b2f3a;
+    transition: all 0.3s ease-in-out;
+}
+
+    .genre-card:hover {
+        box-shadow: 0 0 20px rgba(255, 255, 255, 0.05);
+        transform: translateY(-2px);
+    }
+
+.genre-title {
+    color: #f5f5f5;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+.genre-input {
+    background-color: #2c3240;
+    border: 1px solid #444b5a;
+    color: #fff;
+    border-radius: 8px;
+    padding: 10px;
+    transition: all 0.3s;
+}
+
+    .genre-input:focus {
+        border-color: #00d1b2;
+        box-shadow: 0 0 5px #00d1b2;
+        outline: none;
+    }
+
+.genre-btn {
+    background-color: #00b894;
+    border: none;
+    font-weight: 600;
+    padding: 10px 20px;
+    border-radius: 8px;
+    transition: 0.3s;
+}
+
+    .genre-btn:hover {
+        background-color: #00e6a8;
+        transform: scale(1.05);
+    }
+
+.btn-secondary {
+    background-color: #3a3f4b;
+    color: #ccc;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    transition: 0.3s;
+}
+
+    .btn-secondary:hover {
+        background-color: #525760;
+        color: #fff;
+    }
